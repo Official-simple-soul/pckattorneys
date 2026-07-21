@@ -9,9 +9,27 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@mantine/carousel": "^9.4.2",
+    "@mantine/colors-generator": "^9.4.2",
+    "@mantine/core": "^9.4.2",
+    "@mantine/dropzone": "^9.4.2",
+    "@mantine/form": "^9.4.2",
+    "@mantine/hooks": "^9.4.2",
+    "@mantine/notifications": "^9.4.2",
+    "@prisma/client": "^6.19.3",
+    "@tabler/icons-react": "^3.45.0",
+    "bcryptjs": "^3.0.3",
+    "chroma-js": "^3.2.0",
+    "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.42.2",
+    "jose": "^6.2.3",
     "next": "16.2.10",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "prisma": "^6.19.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,5 +40,12 @@
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "prisma@6.19.3": true,
+    "sharp@0.34.5": true,
+    "unrs-resolver@1.12.2": true
   }
 }
