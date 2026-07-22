@@ -520,12 +520,13 @@ async function main() {
     },
   ];
 
+  // Only create practice areas that don't exist yet. This script is safe to re-run on every
+  // deploy (e.g. as part of the build step) without ever clobbering edits made in /admin.
   for (const area of practiceAreas) {
-    await prisma.practiceArea.upsert({
-      where: { slug: area.slug },
-      update: area,
-      create: area,
-    });
+    const existing = await prisma.practiceArea.findUnique({ where: { slug: area.slug } });
+    if (!existing) {
+      await prisma.practiceArea.create({ data: area });
+    }
   }
 
   // --- Partners ---
@@ -566,11 +567,10 @@ async function main() {
     },
   ];
 
+  // Same rule as practice areas: only create partners that don't exist yet, never overwrite.
   for (const partner of partners) {
     const existing = await prisma.partner.findFirst({ where: { name: partner.name } });
-    if (existing) {
-      await prisma.partner.update({ where: { id: existing.id }, data: partner });
-    } else {
+    if (!existing) {
       await prisma.partner.create({ data: partner });
     }
   }
