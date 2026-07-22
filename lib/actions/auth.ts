@@ -30,8 +30,17 @@ export async function loginAction(
     return { error: "Invalid email or password." };
   }
 
-  const token = await createSessionToken({ sub: user.id, email: user.email });
-  await setSessionCookie(token);
+  try {
+    const token = await createSessionToken({ sub: user.id, email: user.email });
+    await setSessionCookie(token);
+  } catch (err) {
+    console.error("Login failed while creating session:", err);
+    return {
+      error:
+        "The server is missing required configuration (AUTH_SECRET). Contact your developer.",
+    };
+  }
+
   redirect("/admin");
 }
 
