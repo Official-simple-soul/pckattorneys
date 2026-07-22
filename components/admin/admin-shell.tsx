@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AppShell, Burger, Group, NavLink, ScrollArea, Text } from "@mantine/core";
+import { AppShell, Avatar, Burger, Group, Menu, NavLink, ScrollArea, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconLayoutDashboard,
@@ -14,6 +14,8 @@ import {
   IconMail,
   IconLogout,
   IconExternalLink,
+  IconChevronDown,
+  IconUserCircle,
 } from "@tabler/icons-react";
 import { logoutAction } from "@/lib/actions/auth";
 
@@ -52,25 +54,38 @@ export function AdminShell({
               {firmName} · Admin
             </Text>
           </Group>
-          <Group gap="sm">
-            <NavLink
-              component={Link}
-              href="/"
-              label="View site"
-              leftSection={<IconExternalLink size={16} />}
-              style={{ borderRadius: "var(--mantine-radius-sm)" }}
-              target="_blank"
-            />
-            <form action={logoutAction}>
-              <NavLink
-                component="button"
-                type="submit"
-                label="Logout"
-                leftSection={<IconLogout size={16} />}
-                style={{ borderRadius: "var(--mantine-radius-sm)" }}
-              />
-            </form>
-          </Group>
+          <Menu shadow="md" width={190} position="bottom-end" offset={8}>
+            <Menu.Target>
+              <UnstyledButton
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "6px 10px",
+                  borderRadius: "var(--mantine-radius-sm)",
+                }}
+              >
+                <Avatar size={28} radius="xl" color="brand">
+                  <IconUserCircle size={18} />
+                </Avatar>
+                <Text size="sm" fw={500} visibleFrom="xs">
+                  Admin
+                </Text>
+                <IconChevronDown size={14} color="var(--mantine-color-dimmed)" />
+              </UnstyledButton>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item component={Link} href="/" target="_blank" leftSection={<IconExternalLink size={16} />}>
+                View site
+              </Menu.Item>
+              <Menu.Divider />
+              <form action={logoutAction}>
+                <Menu.Item component="button" type="submit" color="red" leftSection={<IconLogout size={16} />}>
+                  Logout
+                </Menu.Item>
+              </form>
+            </Menu.Dropdown>
+          </Menu>
         </Group>
       </AppShell.Header>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import {
   DndContext,
   closestCenter,
@@ -27,6 +27,10 @@ export function SortableList({
   children: ReactNode;
 }) {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
+  // dnd-kit generates internal a11y-announcer ids from an auto-incrementing counter, which
+  // mismatches between the server and client render passes when multiple DndContexts exist on
+  // a page. Passing a stable, SSR-safe id (from React's own useId) keeps it deterministic.
+  const dndId = useId();
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -38,7 +42,7 @@ export function SortableList({
   }
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext id={dndId} sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={ids} strategy={verticalListSortingStrategy}>
         {children}
       </SortableContext>
