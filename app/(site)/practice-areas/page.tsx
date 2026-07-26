@@ -36,7 +36,7 @@ export default async function PracticeAreasPage() {
               Full-Service Commercial Legal Solutions
             </Title>
             <Text c="gray.3" fz="md" maw={640} mt="md" lh={1.7}>
-              Parah, Chen and King LLP advises clients across a broad range of legal disciplines,
+              Parah, Chen and King Attorneys advises clients across a broad range of legal disciplines,
               spanning corporate, finance, disputes, regulatory, and sector-specific matters.
             </Text>
           </Reveal>

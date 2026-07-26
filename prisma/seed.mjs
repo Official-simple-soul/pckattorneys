@@ -21,8 +21,8 @@ async function main() {
     update: {},
     create: {
       id: "settings",
-      firmName: "Parah, Chen and King LLP",
-      shortName: "PCK LLP",
+      firmName: "Parah, Chen and King Attorneys",
+      shortName: "PCK Attorneys",
       tagline:
         "Turning legal complexity into strategic advantage for businesses, investors, and governments worldwide.",
       logoText: "PCK",
@@ -33,7 +33,7 @@ async function main() {
       headingFont: "playfair",
       bodyFont: "inter",
       phone: "+234 (0) 900 000 0000",
-      email: "consult@pckllp.com",
+      email: "consult@pckattorneys.com",
       address: "Plot 1, Central Business District",
       city: "Abuja",
       country: "Nigeria",
@@ -71,7 +71,7 @@ async function main() {
       title: "Corporate & Commercial Law",
       tagline: "Strategic Legal Counsel for Businesses at Every Stage of Growth",
       intro:
-        "Parah, Chen and King LLP advises founders, growth companies, multinational corporations, investors, and public-sector entities on the legal and commercial decisions that shape business performance, investment readiness, and long-term enterprise value.\n\nFrom incorporation and governance to complex commercial transactions and cross-border expansion, we help clients structure opportunities, manage risk, and execute with confidence.",
+        "Parah, Chen and King Attorneys advises founders, growth companies, multinational corporations, investors, and public-sector entities on the legal and commercial decisions that shape business performance, investment readiness, and long-term enterprise value.\n\nFrom incorporation and governance to complex commercial transactions and cross-border expansion, we help clients structure opportunities, manage risk, and execute with confidence.",
       servicesTitle: "Our Corporate & Commercial Services",
       services: [
         "Company formation and corporate structuring",
@@ -94,7 +94,7 @@ async function main() {
         "Designing governance frameworks for growing enterprises",
         "Supporting cross-border commercial relationships and market entry initiatives",
       ],
-      whyTitle: "Why Businesses Choose Parah, Chen and King LLP",
+      whyTitle: "Why Businesses Choose Parah, Chen and King Attorneys",
       whyItems: [
         {
           title: "Commercially Intelligent Advice",
@@ -143,7 +143,7 @@ async function main() {
       ],
       closingTitle: "Build, Scale, and Transact with Confidence",
       closingBody:
-        "Whether you are launching a new venture, negotiating a strategic partnership, raising capital, acquiring a business, or expanding into new markets, Parah, Chen and King LLP provides the legal and commercial guidance required to protect value and accelerate opportunity.",
+        "Whether you are launching a new venture, negotiating a strategic partnership, raising capital, acquiring a business, or expanding into new markets, Parah, Chen and King Attorneys provides the legal and commercial guidance required to protect value and accelerate opportunity.",
       ctaLabel: "Schedule a confidential consultation with our Corporate & Commercial team.",
     },
     {
@@ -154,7 +154,7 @@ async function main() {
       tagline:
         "Sophisticated Counsel for Financing Transactions, Financial Institutions, and Capital Deployment",
       intro:
-        "Parah, Chen and King LLP advises banks, financial institutions, investors, corporates, sponsors, development finance stakeholders, and public-sector entities on complex financing transactions, regulatory obligations, security arrangements, and strategic capital deployment across Nigerian and international markets.\n\nIn today's financial environment, transactions are shaped by evolving regulation, cross-border capital flows, collateral considerations, investor expectations, and execution timelines. Our Banking & Finance practice is designed to help clients structure transactions efficiently, protect their interests, and move capital with confidence.",
+        "Parah, Chen and King Attorneys advises banks, financial institutions, investors, corporates, sponsors, development finance stakeholders, and public-sector entities on complex financing transactions, regulatory obligations, security arrangements, and strategic capital deployment across Nigerian and international markets.\n\nIn today's financial environment, transactions are shaped by evolving regulation, cross-border capital flows, collateral considerations, investor expectations, and execution timelines. Our Banking & Finance practice is designed to help clients structure transactions efficiently, protect their interests, and move capital with confidence.",
       servicesTitle: "Our Banking & Finance Services",
       services: [
         "Corporate and commercial lending",
@@ -180,7 +180,7 @@ async function main() {
         "Assisting with refinancing, restructuring, and distressed debt scenarios",
         "Coordinating multi-stakeholder financing transactions involving banks, investors, sponsors, and public entities",
       ],
-      whyTitle: "Why Clients Choose Parah, Chen and King LLP",
+      whyTitle: "Why Clients Choose Parah, Chen and King Attorneys",
       whyItems: [
         {
           title: "Transaction-Focused Execution",
@@ -229,7 +229,7 @@ async function main() {
       ],
       closingTitle: "Supporting Capital with Confidence",
       closingBody:
-        "Whether you are a lender deploying capital, a borrower raising financing, an investor evaluating transaction risk, or a sponsor structuring a major project, Parah, Chen and King LLP provides the legal and commercial guidance required to execute financing transactions with clarity, protection, and strategic confidence.",
+        "Whether you are a lender deploying capital, a borrower raising financing, an investor evaluating transaction risk, or a sponsor structuring a major project, Parah, Chen and King Attorneys provides the legal and commercial guidance required to execute financing transactions with clarity, protection, and strategic confidence.",
       ctaLabel: "Schedule a confidential consultation with our Banking & Finance team.",
     },
     {
@@ -239,7 +239,7 @@ async function main() {
       title: "Energy & Natural Resources",
       tagline: "Legal Counsel for High-Value Energy, Mining, and Resource Projects",
       intro:
-        "Parah, Chen and King LLP advises investors, developers, operators, financiers, governments, and project stakeholders on the legal, regulatory, commercial, and transactional issues that arise across the energy and natural resources value chain.\n\nNigeria's extractive and infrastructure sectors present significant opportunity, but they also involve complex licensing regimes, regulatory oversight, land and environmental considerations, financing requirements, and multi-stakeholder negotiations. Our role is to help clients navigate that complexity with strategic clarity and execution-focused legal support.",
+        "Parah, Chen and King Attorneys advises investors, developers, operators, financiers, governments, and project stakeholders on the legal, regulatory, commercial, and transactional issues that arise across the energy and natural resources value chain.\n\nNigeria's extractive and infrastructure sectors present significant opportunity, but they also involve complex licensing regimes, regulatory oversight, land and environmental considerations, financing requirements, and multi-stakeholder negotiations. Our role is to help clients navigate that complexity with strategic clarity and execution-focused legal support.",
       servicesTitle: "Our Energy & Natural Resources Services",
       services: [
         "Mining and mineral rights transactions",
@@ -300,7 +300,7 @@ async function main() {
       ],
       closingTitle: "Positioning Projects for Long-Term Success",
       closingBody:
-        "Successful energy and natural resource projects depend on more than obtaining a license. They require a legal strategy that aligns regulatory compliance, commercial viability, financing, stakeholder management, and long-term operational resilience. Parah, Chen and King LLP provides the integrated legal support required to move complex projects from opportunity to execution.",
+        "Successful energy and natural resource projects depend on more than obtaining a license. They require a legal strategy that aligns regulatory compliance, commercial viability, financing, stakeholder management, and long-term operational resilience. Parah, Chen and King Attorneys provides the integrated legal support required to move complex projects from opportunity to execution.",
       ctaLabel:
         "Speak with our Energy & Natural Resources team about your project, investment, or acquisition opportunity.",
     },
@@ -312,7 +312,7 @@ async function main() {
       tagline:
         "Legal Solutions for High-Value Real Estate, Infrastructure, and Development Projects",
       intro:
-        "Parah, Chen and King LLP advises developers, investors, corporations, financial institutions, governments, contractors, sponsors, and asset owners on the legal, regulatory, financing, and transactional issues that arise across the real estate and infrastructure lifecycle.\n\nReal estate and infrastructure projects are among the most capital-intensive and stakeholder-sensitive transactions in any economy. They require careful coordination of land rights, regulatory approvals, financing structures, construction arrangements, government interface, environmental considerations, and long-term operational risk.\n\nOur practice is built to provide integrated legal support from project conception through acquisition, development, financing, operation, restructuring, and dispute resolution.",
+        "Parah, Chen and King Attorneys advises developers, investors, corporations, financial institutions, governments, contractors, sponsors, and asset owners on the legal, regulatory, financing, and transactional issues that arise across the real estate and infrastructure lifecycle.\n\nReal estate and infrastructure projects are among the most capital-intensive and stakeholder-sensitive transactions in any economy. They require careful coordination of land rights, regulatory approvals, financing structures, construction arrangements, government interface, environmental considerations, and long-term operational risk.\n\nOur practice is built to provide integrated legal support from project conception through acquisition, development, financing, operation, restructuring, and dispute resolution.",
       servicesTitle: "Our Real Estate & Infrastructure Services",
       services: [
         "Commercial real estate acquisitions and disposals",
@@ -338,7 +338,7 @@ async function main() {
         "Managing legal risk across development, construction, and operational phases",
         "Assisting with disputes involving contractors, developers, investors, or public entities",
       ],
-      whyTitle: "Why Clients Choose Parah, Chen and King LLP",
+      whyTitle: "Why Clients Choose Parah, Chen and King Attorneys",
       whyItems: [
         {
           title: "Integrated Project Capability",
@@ -402,7 +402,7 @@ async function main() {
       ],
       closingTitle: "From Land to Legacy",
       closingBody:
-        "Whether you are acquiring strategic land, developing a commercial asset, structuring a PPP project, financing infrastructure, or managing a large-scale development portfolio, Parah, Chen and King LLP provides the integrated legal support required to move projects from opportunity to execution and from execution to enduring value.",
+        "Whether you are acquiring strategic land, developing a commercial asset, structuring a PPP project, financing infrastructure, or managing a large-scale development portfolio, Parah, Chen and King Attorneys provides the integrated legal support required to move projects from opportunity to execution and from execution to enduring value.",
       ctaLabel:
         "Speak with our Real Estate & Infrastructure team about your project, investment, or development opportunity.",
     },
@@ -413,7 +413,7 @@ async function main() {
       title: "Dispute Resolution & Litigation",
       tagline: "Strategic Advocacy for High-Stakes Commercial Disputes",
       intro:
-        "Parah, Chen and King LLP represents businesses, investors, financial institutions, insurers, project stakeholders, and public-sector entities in complex commercial disputes, litigation, arbitration, and regulatory enforcement matters.\n\nWhen disputes threaten capital, operations, reputation, contractual relationships, or strategic objectives, clients need more than courtroom representation. They need counsel that understands the commercial consequences of every procedural and strategic decision.",
+        "Parah, Chen and King Attorneys represents businesses, investors, financial institutions, insurers, project stakeholders, and public-sector entities in complex commercial disputes, litigation, arbitration, and regulatory enforcement matters.\n\nWhen disputes threaten capital, operations, reputation, contractual relationships, or strategic objectives, clients need more than courtroom representation. They need counsel that understands the commercial consequences of every procedural and strategic decision.",
       servicesTitle: "Our Dispute Resolution Services",
       services: [
         "Commercial and contractual disputes",
@@ -475,7 +475,7 @@ async function main() {
       ],
       closingTitle: "Protecting What Matters Most",
       closingBody:
-        "Whether you are seeking to enforce a contract, defend a significant claim, resolve a shareholder conflict, recover assets, or manage a complex regulatory dispute, Parah, Chen and King LLP provides strategic advocacy designed to protect value, preserve leverage, and position clients for the strongest possible outcome.",
+        "Whether you are seeking to enforce a contract, defend a significant claim, resolve a shareholder conflict, recover assets, or manage a complex regulatory dispute, Parah, Chen and King Attorneys provides strategic advocacy designed to protect value, preserve leverage, and position clients for the strongest possible outcome.",
       ctaLabel: "Contact our Dispute Resolution & Litigation team for a confidential case assessment.",
     },
     {
@@ -485,7 +485,7 @@ async function main() {
       title: "Regulatory, Tax & ESG",
       tagline: "Compliance, Taxation, Sustainability, and Public-Sector Obligations",
       intro:
-        "Parah, Chen and King LLP advises clients on compliance, taxation, sustainability, governance, and public-sector obligations across Nigerian and international markets.",
+        "Parah, Chen and King Attorneys advises clients on compliance, taxation, sustainability, governance, and public-sector obligations across Nigerian and international markets.",
       servicesTitle: "Our Services",
       services: [],
       mattersTitle: "Representative Matters",
@@ -505,7 +505,7 @@ async function main() {
       title: "IP, Wealth & Insurance",
       tagline: "Intellectual Property, Asset Protection, Wealth Management, and Insurance Advisory",
       intro:
-        "Parah, Chen and King LLP advises clients on intellectual property, asset protection, wealth management, and insurance advisory matters across Nigerian and international markets.",
+        "Parah, Chen and King Attorneys advises clients on intellectual property, asset protection, wealth management, and insurance advisory matters across Nigerian and international markets.",
       servicesTitle: "Our Services",
       services: [],
       mattersTitle: "Representative Matters",
@@ -539,7 +539,7 @@ async function main() {
       photoUrl: "",
       quote:
         "Human development is the highest form of development, and the greatest innovations emerge from the potential of the human mind.",
-      bio: "David E. Umem provides strategic leadership and legal expertise across the firm's diverse practice areas. A seasoned lawyer and advocate, he combines a strong background in law, organisational management, financial administration, and international consultancy to deliver innovative solutions for clients, institutions, and communities.\n\nHe holds a Bachelor of Laws (LL.B) degree and a Diploma in Accounting, giving him a distinctive foundation in both legal practice and financial management. This interdisciplinary perspective enables him to approach complex commercial and regulatory matters with a balanced understanding of legal risk, operational realities, and strategic decision-making.\n\nDavid's professional journey extends beyond traditional legal practice. He has served in leadership roles within international organisations, including as Program Manager at WN International, Brazil, and as a Board Member of Land of Hope, Denmark, and Children Philanthropy, Singapore. These engagements have provided him with significant experience in governance, international collaboration, stakeholder management, and mission-driven leadership.\n\nHe is also widely recognised as the Founder and Executive Director of the African Children's Aid Education and Development Foundation (ACAEDF), home to the internationally known Land of Hope Children's Center. Through this work, he has led transformative initiatives focused on child welfare, education, community development, and social justice across Africa.\n\nHis contributions to the legal profession, humanitarian service, and community development have been acknowledged through numerous national and international awards and recognitions.\n\nAt Parah, Chen and King LLP, David's philosophy is rooted in the conviction that human development is the highest form of development, and that the greatest innovations emerge from the potential of the human mind. This philosophy informs his approach to legal practice, leadership, mentorship, and institutional growth.\n\nHis dual commitment to legal excellence and social impact continues to shape the firm's culture and strengthen its mission of using the law as a tool for sustainable progress.",
+      bio: "David E. Umem provides strategic leadership and legal expertise across the firm's diverse practice areas. A seasoned lawyer and advocate, he combines a strong background in law, organisational management, financial administration, and international consultancy to deliver innovative solutions for clients, institutions, and communities.\n\nHe holds a Bachelor of Laws (LL.B) degree and a Diploma in Accounting, giving him a distinctive foundation in both legal practice and financial management. This interdisciplinary perspective enables him to approach complex commercial and regulatory matters with a balanced understanding of legal risk, operational realities, and strategic decision-making.\n\nDavid's professional journey extends beyond traditional legal practice. He has served in leadership roles within international organisations, including as Program Manager at WN International, Brazil, and as a Board Member of Land of Hope, Denmark, and Children Philanthropy, Singapore. These engagements have provided him with significant experience in governance, international collaboration, stakeholder management, and mission-driven leadership.\n\nHe is also widely recognised as the Founder and Executive Director of the African Children's Aid Education and Development Foundation (ACAEDF), home to the internationally known Land of Hope Children's Center. Through this work, he has led transformative initiatives focused on child welfare, education, community development, and social justice across Africa.\n\nHis contributions to the legal profession, humanitarian service, and community development have been acknowledged through numerous national and international awards and recognitions.\n\nAt Parah, Chen and King Attorneys, David's philosophy is rooted in the conviction that human development is the highest form of development, and that the greatest innovations emerge from the potential of the human mind. This philosophy informs his approach to legal practice, leadership, mentorship, and institutional growth.\n\nHis dual commitment to legal excellence and social impact continues to shape the firm's culture and strengthen its mission of using the law as a tool for sustainable progress.",
       practiceFocus: [
         "Corporate and Commercial Advisory",
         "Governance and Institutional Leadership",
@@ -555,7 +555,7 @@ async function main() {
       title: "Managing Partner",
       photoUrl: "",
       quote: "",
-      bio: "Grace Kalu serves as the Managing Partner of Parah, Chen and King LLP, where she leads the firm's operations, strategy, and client engagement with a blend of legal precision, commercial intelligence, and transformative leadership.\n\nHer practice reflects a rare intersection of corporate law, regulatory compliance, intellectual property, technology, and digital strategy, positioning her as a trusted adviser to businesses, founders, investors, and institutions navigating complex legal and commercial environments.\n\nGrace is a First-Class graduate of the Nigerian Law School and holds a Master of Laws (LL.M). She is also pursuing an MBA at the Lagos Business School, further strengthening her ability to integrate sophisticated legal analysis with business strategy, financial decision-making, and organisational leadership.\n\nHer professional reputation has earned significant national and continental recognition. She has been named among the Top 15 Under 40 Lawyers in Nigeria, recognised as one of the 50 Leading Female Lawyers in Nigeria, and honoured as one of the 25 Africans Changing the Face of Education and Creating Sustainable Impact in Africa (2023).\n\nThese recognitions reflect not only her legal accomplishments, but also her broader influence in innovation, leadership, education, and sustainable development.\n\nAt Parah, Chen and King LLP, Grace channels this award-winning drive into advancing the firm's mission of delivering exceptional legal services while fostering innovation, equity, institutional excellence, and long-term impact for clients and communities alike.\n\nShe is particularly known for bringing a commercially strategic lens to legal advisory, helping clients translate regulatory complexity into practical business opportunities and actionable growth strategies.",
+      bio: "Grace Kalu serves as the Managing Partner of Parah, Chen and King Attorneys, where she leads the firm's operations, strategy, and client engagement with a blend of legal precision, commercial intelligence, and transformative leadership.\n\nHer practice reflects a rare intersection of corporate law, regulatory compliance, intellectual property, technology, and digital strategy, positioning her as a trusted adviser to businesses, founders, investors, and institutions navigating complex legal and commercial environments.\n\nGrace is a First-Class graduate of the Nigerian Law School and holds a Master of Laws (LL.M). She is also pursuing an MBA at the Lagos Business School, further strengthening her ability to integrate sophisticated legal analysis with business strategy, financial decision-making, and organisational leadership.\n\nHer professional reputation has earned significant national and continental recognition. She has been named among the Top 15 Under 40 Lawyers in Nigeria, recognised as one of the 50 Leading Female Lawyers in Nigeria, and honoured as one of the 25 Africans Changing the Face of Education and Creating Sustainable Impact in Africa (2023).\n\nThese recognitions reflect not only her legal accomplishments, but also her broader influence in innovation, leadership, education, and sustainable development.\n\nAt Parah, Chen and King Attorneys, Grace channels this award-winning drive into advancing the firm's mission of delivering exceptional legal services while fostering innovation, equity, institutional excellence, and long-term impact for clients and communities alike.\n\nShe is particularly known for bringing a commercially strategic lens to legal advisory, helping clients translate regulatory complexity into practical business opportunities and actionable growth strategies.",
       practiceFocus: [
         "Corporate and Commercial Law",
         "Regulatory Compliance and Risk Management",

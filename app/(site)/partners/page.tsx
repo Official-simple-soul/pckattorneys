@@ -36,7 +36,7 @@ export default async function PartnersPage() {
               Leadership Built on Legal Excellence, Commercial Insight, and Global Perspective
             </Title>
             <Text c="gray.3" fz="md" maw={640} mt="md" lh={1.7}>
-              Parah, Chen and King LLP is led by partners whose combined experience spans commercial
+              Parah, Chen and King Attorneys is led by partners whose combined experience spans commercial
               law, regulatory advisory, corporate leadership, international development, finance, and
               cross-border engagement.
             </Text>
