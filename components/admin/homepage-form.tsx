@@ -8,6 +8,7 @@ import { notifications } from "@mantine/notifications";
 import { updateHomePage } from "@/lib/actions/content";
 import { ListEditor } from "./list-editor";
 import { TitleBodyListEditor } from "./title-body-list-editor";
+import { ImageUploadField } from "./image-upload-field";
 import type { HomePage } from "@prisma/client";
 
 export function HomepageForm({
@@ -25,6 +26,7 @@ export function HomepageForm({
       heroSubheadline: home.heroSubheadline,
       heroPrimaryCta: home.heroPrimaryCta,
       heroSecondaryCta: home.heroSecondaryCta,
+      heroImage: home.heroImage,
       trustBarItems: home.trustBarItems,
       valuePropTitle: home.valuePropTitle,
       valuePropBody: home.valuePropBody,
@@ -35,6 +37,7 @@ export function HomepageForm({
       whyChooseUsItems: home.whyChooseUsItems,
       aboutPreviewTitle: home.aboutPreviewTitle,
       aboutPreviewBody: home.aboutPreviewBody,
+      aboutPreviewImage: home.aboutPreviewImage,
       aboutPreviewCta: home.aboutPreviewCta,
       finalCtaTitle: home.finalCtaTitle,
       finalCtaBody: home.finalCtaBody,
@@ -77,6 +80,14 @@ export function HomepageForm({
               <TextInput label="Secondary button label" {...form.getInputProps("heroSecondaryCta")} />
             </Group>
             <ListEditor label="Trust bar items" value={form.values.trustBarItems} onChange={(v) => form.setFieldValue("trustBarItems", v)} />
+            <ImageUploadField
+              label="Hero image"
+              description="Optional. Shown alongside the headline. Without one, an abstract skyline graphic is used instead."
+              value={form.values.heroImage}
+              onChange={(v) => form.setFieldValue("heroImage", v)}
+              aspectRatio="4 / 5"
+              previewWidth={120}
+            />
           </Stack>
         </Card>
 
@@ -122,6 +133,14 @@ export function HomepageForm({
           <Stack gap="sm">
             <TextInput label="Title" {...form.getInputProps("aboutPreviewTitle")} />
             <Textarea label="Body" autosize minRows={3} {...form.getInputProps("aboutPreviewBody")} />
+            <ImageUploadField
+              label="Section image"
+              description="Optional. Without one, a short list of practice highlights is shown instead."
+              value={form.values.aboutPreviewImage}
+              onChange={(v) => form.setFieldValue("aboutPreviewImage", v)}
+              aspectRatio="4 / 3"
+              previewWidth={160}
+            />
             <TextInput label="Button label" {...form.getInputProps("aboutPreviewCta")} />
           </Stack>
         </Card>

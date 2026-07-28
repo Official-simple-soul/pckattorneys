@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Badge,
   Box,
@@ -29,6 +30,56 @@ export default async function HomePage() {
   const valuePropBody = asStringArray(home.valuePropBody);
   const whyChooseUsItems = asTitleBodyArray(home.whyChooseUsItems);
 
+  const heroText = (
+    <Stack gap="xl" maw={home.heroImage ? undefined : 820}>
+      <Reveal>
+        <Badge
+          variant="light"
+          color="gold"
+          size="lg"
+          radius="sm"
+          styles={{ root: { textTransform: "none" } }}
+        >
+          {home.heroEyebrow}
+        </Badge>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <Title
+          order={1}
+          c="white"
+          fw={700}
+          lh={1.1}
+          fz={{ base: 34, sm: 46, md: 56 }}
+          ff="var(--mantine-heading-font-family)"
+        >
+          {home.heroHeadline}
+        </Title>
+      </Reveal>
+      <Reveal delay={0.16}>
+        <Text c="gray.3" fz={{ base: "md", md: "lg" }} maw={680} lh={1.6}>
+          {home.heroSubheadline}
+        </Text>
+      </Reveal>
+      <Reveal delay={0.24}>
+        <Group gap="md" mt="sm">
+          <LinkButton
+            href="/contact"
+            size="lg"
+            radius="sm"
+            color="gold"
+            c="ink.9"
+            rightSection={<IconArrowRight size={18} />}
+          >
+            {home.heroPrimaryCta}
+          </LinkButton>
+          <LinkButton href="/partners" size="lg" radius="sm" variant="outline" color="gray.1" c="white">
+            {home.heroSecondaryCta}
+          </LinkButton>
+        </Group>
+      </Reveal>
+    </Stack>
+  );
+
   return (
     <>
       {/* HERO */}
@@ -45,68 +96,38 @@ export default async function HomePage() {
       >
         <GradientMesh variant="hero" />
         <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
-          <Stack gap="xl" maw={820}>
-            <Reveal>
-              <Badge
-                variant="light"
-                color="gold"
-                size="lg"
-                radius="sm"
-                styles={{ root: { textTransform: "none" } }}
-              >
-                {home.heroEyebrow}
-              </Badge>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <Title
-                order={1}
-                c="white"
-                fw={700}
-                lh={1.1}
-                fz={{ base: 34, sm: 46, md: 56 }}
-                ff="var(--mantine-heading-font-family)"
-              >
-                {home.heroHeadline}
-              </Title>
-            </Reveal>
-            <Reveal delay={0.16}>
-              <Text c="gray.3" fz={{ base: "md", md: "lg" }} maw={680} lh={1.6}>
-                {home.heroSubheadline}
-              </Text>
-            </Reveal>
-            <Reveal delay={0.24}>
-              <Group gap="md" mt="sm">
-                <LinkButton
-                  href="/contact"
-                  size="lg"
-                  radius="sm"
-                  color="gold"
-                  c="ink.9"
-                  rightSection={<IconArrowRight size={18} />}
-                >
-                  {home.heroPrimaryCta}
-                </LinkButton>
-                <LinkButton
-                  href="/partners"
-                  size="lg"
-                  radius="sm"
-                  variant="outline"
-                  color="gray.1"
-                  c="white"
-                >
-                  {home.heroSecondaryCta}
-                </LinkButton>
-              </Group>
-            </Reveal>
-          </Stack>
+          {home.heroImage ? (
+            <Grid gap={{ base: 32, md: 48 }} align="center">
+              <GridCol span={{ base: 12, md: 7 }}>{heroText}</GridCol>
+              <GridCol span={{ base: 12, md: 5 }}>
+                <Reveal delay={0.12}>
+                  <Box
+                    style={{
+                      position: "relative",
+                      aspectRatio: "4 / 5",
+                      borderRadius: "var(--mantine-radius-md)",
+                      overflow: "hidden",
+                      boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+                    }}
+                  >
+                    <Image src={home.heroImage} alt={settings.firmName} fill priority style={{ objectFit: "cover" }} />
+                  </Box>
+                </Reveal>
+              </GridCol>
+            </Grid>
+          ) : (
+            heroText
+          )}
         </div>
 
-        <Box
-          c="gray.2"
-          style={{ position: "relative", zIndex: 1, marginTop: 64, opacity: 0.5 }}
-        >
-          <SkylineSilhouette />
-        </Box>
+        {!home.heroImage && (
+          <Box
+            c="gray.2"
+            style={{ position: "relative", zIndex: 1, marginTop: 64, opacity: 0.5 }}
+          >
+            <SkylineSilhouette />
+          </Box>
+        )}
 
         {/* TRUST BAR */}
         <Box
@@ -312,26 +333,44 @@ export default async function HomePage() {
             </GridCol>
             <GridCol span={{ base: 12, md: 5 }}>
               <Reveal delay={0.1}>
-                <Stack gap="md">
-                  {["Corporate Governance", "Cross-Border Transactions", "Regulatory Strategy"].map(
-                    (label) => (
-                      <Group
-                        key={label}
-                        p="md"
-                        style={{
-                          border: "1px solid color-mix(in srgb, white 14%, transparent)",
-                          borderRadius: "var(--mantine-radius-md)",
-                        }}
-                        justify="space-between"
-                      >
-                        <Text c="gray.2" size="sm" fw={500}>
-                          {label}
-                        </Text>
-                        <IconArrowUpRight size={16} color="var(--mantine-color-gold-5)" />
-                      </Group>
-                    )
-                  )}
-                </Stack>
+                {home.aboutPreviewImage ? (
+                  <Box
+                    style={{
+                      position: "relative",
+                      aspectRatio: "4 / 3",
+                      borderRadius: "var(--mantine-radius-md)",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src={home.aboutPreviewImage}
+                      alt={home.aboutPreviewTitle}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                  </Box>
+                ) : (
+                  <Stack gap="md">
+                    {["Corporate Governance", "Cross-Border Transactions", "Regulatory Strategy"].map(
+                      (label) => (
+                        <Group
+                          key={label}
+                          p="md"
+                          style={{
+                            border: "1px solid color-mix(in srgb, white 14%, transparent)",
+                            borderRadius: "var(--mantine-radius-md)",
+                          }}
+                          justify="space-between"
+                        >
+                          <Text c="gray.2" size="sm" fw={500}>
+                            {label}
+                          </Text>
+                          <IconArrowUpRight size={16} color="var(--mantine-color-gold-5)" />
+                        </Group>
+                      )
+                    )}
+                  </Stack>
+                )}
               </Reveal>
             </GridCol>
           </Grid>

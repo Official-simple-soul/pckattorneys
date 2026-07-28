@@ -7,22 +7,20 @@ export const getSiteSettings = cache(async () => {
   return prisma.siteSettings.create({ data: { id: "settings" } });
 });
 
+// HomePage/AboutPage/ContactPage have no field defaults at the DB level (MySQL
+// doesn't allow defaults on TEXT/JSON columns), so unlike SiteSettings these rows
+// can't be lazily created with partial data. `db:setup` always seeds them with full
+// content before the app runs, so a missing row here means seeding hasn't happened.
 export const getHomePage = cache(async () => {
-  const home = await prisma.homePage.findUnique({ where: { id: "home" } });
-  if (home) return home;
-  return prisma.homePage.create({ data: {} });
+  return prisma.homePage.findUniqueOrThrow({ where: { id: "home" } });
 });
 
 export const getAboutPage = cache(async () => {
-  const about = await prisma.aboutPage.findUnique({ where: { id: "about" } });
-  if (about) return about;
-  return prisma.aboutPage.create({ data: {} });
+  return prisma.aboutPage.findUniqueOrThrow({ where: { id: "about" } });
 });
 
 export const getContactPage = cache(async () => {
-  const contact = await prisma.contactPage.findUnique({ where: { id: "contact" } });
-  if (contact) return contact;
-  return prisma.contactPage.create({ data: {} });
+  return prisma.contactPage.findUniqueOrThrow({ where: { id: "contact" } });
 });
 
 export const getPracticeAreas = cache(async () => {

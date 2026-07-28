@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -44,53 +44,59 @@ model SiteSettings {
 }
 
 /// Singleton row (id always "home") for all editable homepage copy.
+/// No field defaults here (aside from id): MySQL doesn't allow default values on
+/// TEXT/JSON columns, and every field is always supplied explicitly by the seed
+/// script and the admin update action anyway.
 model HomePage {
   id                     String   @id @default("home")
-  heroEyebrow            String   @default("Abuja · Global Commercial Counsel")
-  heroHeadline           String   @default("Strategic Legal Counsel for Businesses, Investors, and Governments")
-  heroSubheadline        String   @default("Parah, Chen and King Attorneys is a full-service commercial law firm headquartered in Abuja, Nigeria, advising founders, investors, corporations, financial institutions, and public-sector entities on complex transactions, regulatory matters, disputes, and cross-border opportunities across global markets.")
-  heroPrimaryCta         String   @default("Schedule a Consultation")
-  heroSecondaryCta       String   @default("Speak With Our Team")
-  trustBarItems          Json     @default("[\"Abuja Headquarters\",\"Global Operations\",\"Full-Service Commercial Practice\",\"Cross-Border Transactions\",\"Regulatory & Strategic Advisory\"]")
-  valuePropTitle         String   @default("We Show Clients How the Law Can Work for Them")
-  valuePropBody          Json     @default("[\"At Parah, Chen and King Attorneys, we believe legal counsel should do more than identify risk\\u2014it should create pathways for growth, investment, protection, and long-term value.\",\"Whether a client is launching a venture, raising capital, acquiring assets, navigating regulation, resolving a dispute, or executing a major infrastructure or energy project, our role is to provide clear answers, practical strategy, and decisive legal execution.\",\"Complex matters rarely come with simple instructions. Our clients come to us because they need lawyers who can think commercially, respond decisively, and move matters forward.\"]")
-  practiceOverviewTitle  String   @default("Full-Service Commercial Legal Solutions")
-  practiceOverviewCta    String   @default("Explore Our Practice Areas")
-  whyChooseUsTitle       String   @default("Why Leading Clients Choose Parah, Chen and King Attorneys")
-  whyChooseUsIntro       String   @default("We combine deep knowledge of Nigerian law with the commercial realities of international transactions, investment structures, and cross-border operations.")
-  whyChooseUsItems       Json     @default("[{\"title\":\"Commercially Intelligent Advice\",\"body\":\"Our recommendations are designed not only to protect legal interests, but also to support business objectives, investor confidence, and operational efficiency.\"},{\"title\":\"Decisive Problem Solving\",\"body\":\"Clients rely on us when matters are urgent, complex, or high-stakes because we provide clear direction, practical options, and responsive execution.\"},{\"title\":\"Clarity in Complexity\",\"body\":\"We explain sophisticated legal issues in language decision-makers can act on, enabling founders, executives, investors, and public officials to move forward with confidence.\"}]")
-  aboutPreviewTitle      String   @default("A Firm Built for Complex Commercial Environments")
-  aboutPreviewBody       String   @default("Headquartered in Abuja and operating across global markets, Parah, Chen and King Attorneys was established to serve clients whose legal needs extend beyond a single jurisdiction or a single discipline. Our lawyers work at the intersection of law, business, finance, regulation, and public policy\\u2014providing integrated advice that reflects the realities of modern commerce.")
-  aboutPreviewCta        String   @default("Learn More About the Firm")
-  finalCtaTitle          String   @default("Need Strategic Legal Guidance?")
-  finalCtaBody           String   @default("Whether you are structuring an investment, negotiating a transaction, managing regulatory exposure, resolving a dispute, or pursuing a major infrastructure, energy, or commercial opportunity, our team is prepared to help you assess risk, identify opportunity, and take the next step with confidence.")
-  finalCtaPrimary        String   @default("Schedule a Confidential Consultation")
-  finalCtaSecondary      String   @default("Contact the Firm")
+  heroEyebrow            String
+  heroHeadline           String
+  heroSubheadline        String   @db.Text
+  heroPrimaryCta         String
+  heroSecondaryCta       String
+  heroImage              String
+  trustBarItems          Json
+  valuePropTitle         String
+  valuePropBody          Json
+  practiceOverviewTitle  String
+  practiceOverviewCta    String
+  whyChooseUsTitle       String
+  whyChooseUsIntro       String   @db.Text
+  whyChooseUsItems       Json
+  aboutPreviewTitle      String
+  aboutPreviewBody       String   @db.Text
+  aboutPreviewImage      String
+  aboutPreviewCta        String
+  finalCtaTitle          String
+  finalCtaBody           String   @db.Text
+  finalCtaPrimary        String
+  finalCtaSecondary      String
   updatedAt              DateTime @updatedAt
 }
 
-/// Singleton row (id always "about") for the About page.
+/// Singleton row (id always "about") for the About page. See HomePage note above
+/// re: no field defaults (MySQL TEXT/JSON columns can't have them).
 model AboutPage {
   id                  String   @id @default("about")
-  heroTitle           String   @default("About Parah, Chen and King Attorneys")
-  heroSubtitle        String   @default("A Firm Built for Complex Commercial Realities")
-  intro               String   @default("Parah, Chen and King Attorneys is a full-service commercial law firm headquartered in Abuja, Nigeria, serving clients across domestic and international markets. We advise founders, investors, corporations, financial institutions, development partners, and public-sector entities on matters that demand strategic legal thinking, commercial judgment, and decisive execution.\\n\\nOur practice spans corporate and commercial law, banking and finance, intellectual property, dispute resolution, ESG, restructuring and insolvency, litigation, insurance, wealth and asset management, regulatory compliance, taxation, real estate, infrastructure, energy, and natural resources.\\n\\nIn an increasingly interconnected economy, legal issues rarely exist in isolation. A financing transaction may raise regulatory questions. An infrastructure project may involve land, environmental, tax, and government considerations. A commercial dispute may affect investor confidence and operational continuity. We are structured to provide integrated legal solutions that reflect the full commercial context in which our clients operate.")
-  storyTitle          String   @default("Our Story")
-  storyBody           String   @default("Parah, Chen and King Attorneys was founded on a simple but powerful conviction: the law should be a tool for progress, not an obstacle to it.\\n\\nToo often, businesses encounter legal advice that identifies problems without creating pathways forward. We established this firm to offer a different kind of counsel\\u2014advice that is legally rigorous, commercially intelligent, and oriented toward practical outcomes.\\n\\nFrom early-stage founders seeking clarity on corporate structure, to investors evaluating complex transactions, to government stakeholders navigating infrastructure and regulatory projects, our clients come to us because they need lawyers who can analyze complexity, provide clear direction, and help move critical matters forward with confidence.")
-  missionText         String   @default("To provide strategic legal counsel that enables businesses, investors, institutions, and governments to navigate complexity, manage risk, unlock opportunity, and create long-term value across local and global markets.")
-  visionText          String   @default("To be a globally respected African commercial law firm known for transforming legal complexity into strategic advantage for clients operating in high-growth and high-impact sectors.")
-  philosophyTitle     String   @default("The Law Must Work for the Client")
-  philosophyBody      String   @default("At the center of our practice is a principle that guides every engagement: we show clients how the law can work for them.\\n\\nThis means we do not approach legal problems with a purely academic mindset. We begin by understanding the client's objective\\u2014growth, investment, protection, restructuring, expansion, compliance, dispute resolution, or public impact\\u2014and then design a legal strategy aligned with that objective.")
-  philosophyQuestions Json     @default("[\"What is legally permissible?\",\"What is commercially sensible?\",\"What is strategically sustainable?\",\"What will move the client closer to the desired outcome?\"]")
-  approachItems       Json     @default("[{\"title\":\"Commercial First\",\"body\":\"We understand that legal decisions are business decisions. Our advice is grounded in commercial reality, market dynamics, and operational practicality.\"},{\"title\":\"Clarity Over Complexity\",\"body\":\"Sophisticated legal issues should not require a law degree to understand. We communicate with precision, transparency, and actionable clarity.\"},{\"title\":\"Integrated Thinking\",\"body\":\"Our multidisciplinary practice allows us to connect corporate, financial, regulatory, tax, litigation, and sector-specific considerations into a unified legal strategy.\"},{\"title\":\"Responsive Execution\",\"body\":\"In high-stakes matters, timing matters. We prioritize responsiveness, clear communication, and efficient execution so clients can make informed decisions without unnecessary delay.\"}]")
-  whoWeServeItems     Json     @default("[{\"title\":\"Founders and Growth Companies\",\"body\":\"We help entrepreneurs build strong legal foundations, raise capital, protect intellectual property, negotiate commercial agreements, and scale with confidence.\"},{\"title\":\"Investors and Financial Institutions\",\"body\":\"We advise on transactions, due diligence, financing structures, regulatory exposure, asset protection, and cross-border investment opportunities.\"},{\"title\":\"Corporations and Multinationals\",\"body\":\"We provide ongoing commercial counsel, compliance support, dispute management, employment and governance advice, and strategic legal partnership across business operations.\"},{\"title\":\"Governments and Public-Sector Stakeholders\",\"body\":\"We support infrastructure development, public-private initiatives, regulatory frameworks, energy and natural resource projects, and matters involving complex stakeholder coordination.\"}]")
-  globalTitle         String   @default("Global Perspective, Local Strength")
-  globalBody          String   @default("Although headquartered in Abuja, our outlook is inherently international. We regularly work on matters involving foreign investors, cross-border transactions, international counterparties, and global regulatory considerations.")
-  globalPoints        Json     @default("[\"Deep understanding of Nigerian legal and regulatory systems\",\"Appreciation of international business expectations\",\"Practical transaction experience\",\"Sector-specific commercial insight\"]")
-  standardTitle       String   @default("The Standard We Hold Ourselves To")
-  standardIntro       String   @default("Clients often engage Parah, Chen and King Attorneys at moments of significant consequence\\u2014when capital is being deployed, businesses are being acquired, projects are being negotiated, disputes are escalating, or regulatory scrutiny is increasing.")
-  standardPoints      Json     @default("[\"Rigorous legal analysis\",\"Clear strategic advice\",\"Practical commercial solutions\",\"Decisive execution\",\"Unwavering client focus\"]")
-  closingBody         String   @default("Whether you are launching a venture, structuring an investment, negotiating a major transaction, managing regulatory risk, resolving a dispute, or pursuing a transformative infrastructure or energy opportunity, Parah, Chen and King Attorneys is prepared to serve as your strategic legal partner.")
+  heroTitle           String
+  heroSubtitle        String
+  intro               String   @db.Text
+  storyTitle          String
+  storyBody           String   @db.Text
+  missionText         String   @db.Text
+  visionText          String   @db.Text
+  philosophyTitle     String
+  philosophyBody      String   @db.Text
+  philosophyQuestions Json
+  approachItems       Json
+  whoWeServeItems     Json
+  globalTitle         String
+  globalBody          String   @db.Text
+  globalPoints        Json
+  standardTitle       String
+  standardIntro       String   @db.Text
+  standardPoints      Json
+  closingBody         String   @db.Text
   updatedAt           DateTime @updatedAt
 }
 
@@ -100,17 +106,17 @@ model PracticeArea {
   slug           String   @unique
   shortTitle     String
   title          String
-  tagline        String
-  intro          String
+  tagline        String   @db.Text
+  intro          String   @db.Text
   servicesTitle  String   @default("Our Services")
-  services       Json     @default("[]")
+  services       Json
   mattersTitle   String   @default("Representative Matters")
-  matters        Json     @default("[]")
+  matters        Json
   whyTitle       String   @default("Why Clients Choose Us")
-  whyItems       Json     @default("[]")
-  extraSections  Json     @default("[]")
+  whyItems       Json
+  extraSections  Json
   closingTitle   String   @default("Let's Talk About Your Matter")
-  closingBody    String   @default("")
+  closingBody    String   @db.Text
   ctaLabel       String   @default("Schedule a Confidential Consultation")
   heroImage      String   @default("")
   createdAt      DateTime @default(now())
@@ -124,9 +130,9 @@ model Partner {
   credentials    String   @default("Esq.")
   title          String
   photoUrl       String   @default("")
-  bio            String
-  quote          String   @default("")
-  practiceFocus  Json     @default("[]")
+  bio            String   @db.Text
+  quote          String   @db.Text
+  practiceFocus  Json
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -134,20 +140,20 @@ model Partner {
 /// Singleton row (id always "contact") for the Contact / Consultation page.
 model ContactPage {
   id           String   @id @default("contact")
-  heroTitle    String   @default("Schedule a Confidential Consultation")
-  heroSubtitle String   @default("Tell us about your matter and a member of our team will respond promptly to arrange a consultation.")
-  formIntro    String   @default("All submissions are treated as strictly confidential.")
+  heroTitle    String
+  heroSubtitle String   @db.Text
+  formIntro    String   @db.Text
   updatedAt    DateTime @updatedAt
 }
 
 model ContactSubmission {
-  id          String   @id @default(cuid())
-  name        String
-  email       String
-  phone       String   @default("")
-  company     String   @default("")
-  practiceArea String  @default("")
-  message     String
-  createdAt   DateTime @default(now())
-  read        Boolean  @default(false)
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  phone        String   @default("")
+  company      String   @default("")
+  practiceArea String   @default("")
+  message      String   @db.Text
+  createdAt    DateTime @default(now())
+  read         Boolean  @default(false)
 }
