@@ -72,9 +72,7 @@ export function HeaderNav({
                   height: 40,
                   borderRadius: "var(--mantine-radius-sm)",
                   overflow: "hidden",
-                  background: logoUrl
-                    ? undefined
-                    : "linear-gradient(135deg, var(--mantine-color-brand-7), var(--mantine-color-brand-9))",
+                  background: logoUrl ? undefined : "var(--mantine-color-brand-9)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -90,9 +88,8 @@ export function HeaderNav({
                 )}
               </Box>
               <Text
-                fw={600}
                 size="lg"
-                c="dark.7"
+                c="brand.9"
                 ff="var(--mantine-heading-font-family)"
                 visibleFrom="sm"
                 lineClamp={1}
@@ -149,7 +146,7 @@ export function HeaderNav({
                 <Divider my="xs" />
                 <UnstyledButton component={Link} href="/practice-areas" onClick={() => setPracticeOpen(false)}>
                   <Text size="sm" fw={600} c="brand.7">
-                    View all practice areas →
+                    View all practice areas
                   </Text>
                 </UnstyledButton>
               </Popover.Dropdown>

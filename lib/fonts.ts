@@ -2,6 +2,7 @@ import {
   Playfair_Display,
   Merriweather,
   Libre_Baskerville,
+  Libre_Caslon_Text,
   Sora,
   Inter,
   Work_Sans,
@@ -28,6 +29,13 @@ const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-libre-baskerville",
+  display: "swap",
+});
+
+const libreCaslon = Libre_Caslon_Text({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-libre-caslon",
   display: "swap",
 });
 
@@ -71,6 +79,7 @@ export const HEADING_FONTS = {
   playfair: { label: "Playfair Display", variable: "--font-playfair", font: playfair, css: "var(--font-playfair)" },
   merriweather: { label: "Merriweather", variable: "--font-merriweather", font: merriweather, css: "var(--font-merriweather)" },
   libreBaskerville: { label: "Libre Baskerville", variable: "--font-libre-baskerville", font: libreBaskerville, css: "var(--font-libre-baskerville)" },
+  libreCaslon: { label: "Libre Caslon", variable: "--font-libre-caslon", font: libreCaslon, css: "var(--font-libre-caslon)" },
   sora: { label: "Sora (modern sans)", variable: "--font-sora", font: sora, css: "var(--font-sora)" },
 } as const;
 

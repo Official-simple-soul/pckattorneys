@@ -1,0 +1,34 @@
+// Stock imagery bundled with the site. All of it is CC0, so no attribution is required;
+// source pages are kept here so the licence of each file can be re-checked.
+export const LEGAL_IMAGES = {
+  justiceStatue: {
+    src: "/images/legal/justice-statue.webp",
+    width: 780,
+    height: 623,
+    alt: "Gold statue of Lady Justice, blindfolded, holding a sword and balanced scales",
+    source: "https://www.rawpixel.com/image/5912904/image-public-domain-statue-free",
+  },
+  lawBooks: {
+    src: "/images/legal/law-books.webp",
+    width: 1200,
+    height: 937,
+    alt: "Leather-bound law reports stacked in front of a full bookshelf",
+    source: "https://commons.wikimedia.org/w/index.php?curid=58022224",
+  },
+  magnaCarta: {
+    src: "/images/legal/magna-carta.webp",
+    width: 1600,
+    height: 1011,
+    alt: "Handwritten Latin text of Magna Carta on parchment",
+    caption: "Magna Carta, 1215. British Library, Cotton MS Augustus II.106.",
+    source: "https://commons.wikimedia.org/wiki/File:Magna_Carta_(1215)_-_BL_Cotton_MS_Augustus_II_106.jpg",
+  },
+  oldBaileyCourt: {
+    src: "/images/legal/old-bailey-court.webp",
+    width: 1920,
+    height: 1280,
+    alt: "Wood-panelled courtroom with the dock, counsel benches and a domed ceiling",
+    caption: "Court No. 1, Central Criminal Court (the Old Bailey), London.",
+    source: "https://commons.wikimedia.org/w/index.php?curid=175179943",
+  },
+} as const;

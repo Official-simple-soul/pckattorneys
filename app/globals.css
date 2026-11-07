@@ -34,3 +34,345 @@ body {
   border-color: var(--mantine-color-brand-4) !important;
   box-shadow: var(--mantine-shadow-md);
 }
+
+/* --- Shared --- */
+
+:root {
+  /* Pages reference this name; Mantine's own variable is --mantine-font-family-headings. */
+  --mantine-heading-font-family: var(--mantine-font-family-headings);
+  --pck-tint: color-mix(in srgb, var(--mantine-color-brand-9) 5%, white);
+  --pck-rule: color-mix(in srgb, var(--mantine-color-brand-9) 16%, white);
+  --pck-rule-on-navy: color-mix(in srgb, white 16%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--mantine-color-gold-5);
+  outline-offset: 2px;
+}
+
+.hover-bg:hover {
+  background: var(--pck-tint);
+}
+
+/* --- Landing page --- */
+
+.home-section {
+  padding-block: 4.5rem;
+}
+
+@media (min-width: 62em) {
+  .home-section {
+    padding-block: 7rem;
+  }
+}
+
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--mantine-color-brand-9);
+}
+
+.home-hero-stage {
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 48em) {
+  .home-hero-stage {
+    padding-inline: 2.5rem;
+  }
+}
+
+.home-hero-text {
+  position: relative;
+  z-index: 1;
+  padding-top: 3.5rem;
+}
+
+.home-hero-figure {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.home-hero-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 62em) {
+  .home-hero-stage {
+    position: relative;
+    max-width: 1280px;
+    margin-inline: auto;
+  }
+
+  .home-hero-text {
+    width: 46%;
+    padding-block: 6rem 7rem;
+  }
+
+  .home-hero-figure {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 54%;
+    margin-top: 0;
+  }
+}
+
+.home-hero-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.home-hero-seq {
+  animation: home-hero-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--seq, 0ms);
+}
+
+@keyframes home-hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-seq {
+    animation: none;
+  }
+}
+
+.home-trust {
+  display: grid;
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.home-trust li {
+  padding-block: 0.875rem;
+  color: var(--mantine-color-gray-2);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+}
+
+.home-trust li + li {
+  border-top: 1px solid var(--pck-rule-on-navy);
+}
+
+.home-trust-bar {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--pck-rule-on-navy);
+}
+
+/* Labels stay on one line: three to a row on small desktops, one row from 75em up. */
+@media (min-width: 62em) {
+  .home-trust {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .home-trust li {
+    padding: 1.25rem;
+    white-space: nowrap;
+  }
+
+  .home-trust li + li {
+    border-top: 0;
+    border-left: 1px solid var(--pck-rule-on-navy);
+  }
+
+  .home-trust li:nth-child(3n + 1) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .home-trust li:nth-child(n + 4) {
+    border-top: 1px solid var(--pck-rule-on-navy);
+  }
+
+  /* Five items leave a gap in the second row; let the last one fill it. */
+  .home-trust li:nth-child(5):last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 75em) {
+  .home-trust {
+    display: flex;
+  }
+
+  .home-trust li {
+    flex: 1 1 auto;
+  }
+
+  .home-trust li:nth-child(3n + 1) {
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--pck-rule-on-navy);
+  }
+
+  .home-trust li:nth-child(n + 4) {
+    border-top: 0;
+  }
+
+  .home-trust li:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .home-trust li:last-child {
+    flex-grow: 0;
+    padding-right: 0;
+  }
+}
+
+.plate {
+  margin: 0;
+}
+
+.plate-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.plate-caption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--mantine-color-dark-4);
+}
+
+.home-tint {
+  background: var(--pck-tint);
+}
+
+@media (min-width: 62em) {
+  .home-sticky {
+    position: sticky;
+    top: 108px;
+  }
+}
+
+.practice-list {
+  border-top: 1px solid var(--pck-rule);
+}
+
+.practice-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 20px;
+  gap: 1.25rem;
+  align-items: start;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--pck-rule);
+  color: inherit;
+  text-decoration: none;
+}
+
+.practice-row-ring {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--mantine-color-gold-6);
+  border-radius: 50%;
+  color: var(--mantine-color-brand-9);
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.practice-row-title {
+  text-underline-offset: 5px;
+  text-decoration-color: var(--mantine-color-gold-6);
+}
+
+.practice-row-go {
+  margin-top: 12px;
+  color: var(--mantine-color-gold-7);
+  transition: transform 150ms ease;
+}
+
+.practice-row:hover .practice-row-title {
+  text-decoration-line: underline;
+}
+
+.practice-row:hover .practice-row-ring {
+  background: var(--mantine-color-brand-9);
+  color: var(--mantine-color-gold-4);
+}
+
+.practice-row:hover .practice-row-go {
+  transform: translateX(4px);
+}
+
+.home-why-item {
+  border-top: 1px solid var(--mantine-color-brand-9);
+  padding-top: 1.25rem;
+}
+
+.home-scales {
+  display: none;
+  width: 190px;
+  height: auto;
+  color: var(--mantine-color-gold-6);
+}
+
+@media (min-width: 62em) {
+  .home-scales {
+    display: block;
+    margin-left: auto;
+  }
+}
+
+.home-court-photo {
+  position: relative;
+  height: clamp(280px, 52vw, 680px);
+}
+
+.home-court-panel {
+  position: relative;
+  z-index: 1;
+  background: var(--mantine-color-brand-9);
+  padding: 2.5rem 1.5rem;
+}
+
+.home-court-caption {
+  padding-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--mantine-color-dark-4);
+}
+
+@media (min-width: 62em) {
+  .home-court-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .home-court-panel {
+    flex: 0 0 min(600px, 54%);
+    margin-top: -11rem;
+    padding: 3.5rem;
+  }
+
+  .home-court-caption {
+    max-width: 22rem;
+    text-align: right;
+  }
+}
+
+.home-cta {
+  background: var(--pck-tint);
+  padding-top: 5rem;
+}
+
+.home-portico {
+  display: block;
+  width: min(100%, 960px);
+  height: auto;
+  margin: 3.5rem auto 0;
+  color: var(--mantine-color-brand-9);
+}

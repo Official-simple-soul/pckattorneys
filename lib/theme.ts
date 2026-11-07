@@ -16,7 +16,7 @@ export function buildTheme(settings: SiteSettings): MantineThemeOverride {
     fontFamilyMonospace: "ui-monospace, SFMono-Regular, Menlo, monospace",
     headings: {
       fontFamily: headingFontCss(settings.headingFont),
-      fontWeight: "600",
+      fontWeight: "400",
     },
     defaultRadius: settings.radius || "md",
     other: {
@@ -27,6 +27,8 @@ export function buildTheme(settings: SiteSettings): MantineThemeOverride {
       Button: {
         defaultProps: {
           radius: "sm",
+          // Exact brand navy: the generated scale puts the configured colour at shade 9.
+          color: "brand.9",
         },
       },
     },
