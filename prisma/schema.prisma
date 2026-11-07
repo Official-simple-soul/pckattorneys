@@ -130,6 +130,8 @@ model Partner {
   credentials    String   @default("Esq.")
   title          String
   photoUrl       String   @default("")
+  email          String   @default("")
+  phone          String   @default("")
   bio            String   @db.Text
   quote          String   @db.Text
   practiceFocus  Json

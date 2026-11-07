@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import { useForm } from "@mantine/form";
+import { isEmail, useForm } from "@mantine/form";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { Alert, Box, Button, Card, Group, Stack, Text, Textarea, TextInput, Title } from "@mantine/core";
 import { IconAlertCircle, IconCheck, IconPhoto, IconTrash, IconUpload, IconX } from "@tabler/icons-react";
@@ -17,6 +17,8 @@ type PartnerValues = {
   credentials: string;
   title: string;
   photoUrl: string;
+  email: string;
+  phone: string;
   quote: string;
   bio: string;
   practiceFocus: string[];
@@ -36,7 +38,13 @@ export function PartnerForm({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const form = useForm({ initialValues });
+  const form = useForm({
+    initialValues,
+    validate: {
+      email: (value) => (value.trim() ? isEmail("Enter a valid email address.")(value.trim()) : null),
+    },
+    transformValues: (values) => ({ ...values, email: values.email.trim(), phone: values.phone.trim() }),
+  });
 
   async function handleDrop(files: File[]) {
     const file = files[0];
@@ -53,7 +61,7 @@ export function PartnerForm({
     }
   }
 
-  async function handleSubmit(values: typeof form.values) {
+  async function handleSubmit(values: PartnerValues) {
     setPending(true);
     setError(null);
     const result = mode === "create" ? await createPartner(values) : await updatePartner(id!, values);
@@ -125,6 +133,20 @@ export function PartnerForm({
               <TextInput label="Credentials (e.g. Esq.)" {...form.getInputProps("credentials")} />
             </Group>
             <TextInput label="Title" required placeholder="Managing Partner" {...form.getInputProps("title")} />
+            <Group grow align="flex-start">
+              <TextInput
+                label="Email (shown publicly)"
+                type="email"
+                placeholder="name@pckattorneys.com"
+                {...form.getInputProps("email")}
+              />
+              <TextInput
+                label="Phone (shown publicly)"
+                type="tel"
+                placeholder="+234 800 000 0000"
+                {...form.getInputProps("phone")}
+              />
+            </Group>
             <Textarea label="Quote (optional)" autosize minRows={2} {...form.getInputProps("quote")} />
             <Textarea label="Biography (blank line = new paragraph)" autosize minRows={6} {...form.getInputProps("bio")} />
             <ListEditor

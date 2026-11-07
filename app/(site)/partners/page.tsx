@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Badge, Box, Divider, Grid, GridCol, Group, Stack, Text, Title } from "@mantine/core";
-import { IconQuote } from "@tabler/icons-react";
+import { Anchor, Badge, Box, Divider, Grid, GridCol, Group, Stack, Text, Title } from "@mantine/core";
+import { IconMail, IconPhone, IconQuote } from "@tabler/icons-react";
 import { getPartners } from "@/lib/content";
 import { asStringArray } from "@/lib/types";
 import { Reveal } from "@/components/reveal";
@@ -89,6 +89,27 @@ export default async function PartnersPage() {
                       <Title order={2} fz={{ base: 24, md: 30 }} ff="var(--mantine-heading-font-family)" c="ink.9" mt={4} mb="md">
                         {partner.name}, {partner.credentials}
                       </Title>
+
+                      {(partner.email || partner.phone) && (
+                        <Group gap="lg" mb="lg">
+                          {partner.email && (
+                            <Anchor href={`mailto:${partner.email}`} size="sm" fw={500} c="brand.7">
+                              <Group gap={6} wrap="nowrap">
+                                <IconMail size={16} stroke={1.5} aria-hidden />
+                                {partner.email}
+                              </Group>
+                            </Anchor>
+                          )}
+                          {partner.phone && (
+                            <Anchor href={`tel:${partner.phone.replace(/[^+\d]/g, "")}`} size="sm" fw={500} c="brand.7">
+                              <Group gap={6} wrap="nowrap">
+                                <IconPhone size={16} stroke={1.5} aria-hidden />
+                                {partner.phone}
+                              </Group>
+                            </Anchor>
+                          )}
+                        </Group>
+                      )}
 
                       {partner.quote && (
                         <Box

@@ -29,6 +29,8 @@ export default async function EditPartnerPage({
           credentials: partner.credentials,
           title: partner.title,
           photoUrl: partner.photoUrl,
+          email: partner.email,
+          phone: partner.phone,
           quote: partner.quote,
           bio: partner.bio,
           practiceFocus: asStringArray(partner.practiceFocus),
