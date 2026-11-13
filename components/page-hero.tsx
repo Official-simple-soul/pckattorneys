@@ -10,11 +10,14 @@ export function PageHero({
   intro,
   above,
   image,
+  art,
 }: {
   title: string;
   intro?: string;
   above?: ReactNode;
   image?: HeroImage;
+  /** Decorative line art shown on the right on wide screens, for heroes without a photo. */
+  art?: ReactNode;
 }) {
   return (
     <section className="page-hero">
@@ -50,6 +53,7 @@ export function PageHero({
           )}
         </Stack>
         {image?.caption && <p className="page-hero-caption">{image.caption}</p>}
+        {art && !image && <div className="page-hero-art">{art}</div>}
       </div>
     </section>
   );

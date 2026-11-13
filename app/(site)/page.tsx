@@ -15,7 +15,8 @@ import { getHomePage, getPracticeAreas, getSiteSettings } from '@/lib/content';
 import { asStringArray, asTitleBodyArray } from '@/lib/types';
 import { getPracticeIcon } from '@/lib/practice-icons';
 import { LEGAL_IMAGES } from '@/lib/legal-images';
-import { PorticoArt, ScalesArt } from '@/components/legal-art';
+import { ScalesArt } from '@/components/legal-art';
+import { ClosingCta } from '@/components/closing-cta';
 import { LinkButton } from '@/components/ui/link-button';
 
 const HEADING_FONT = 'var(--mantine-heading-font-family)';
@@ -127,7 +128,7 @@ export default async function HomePage() {
       </section>
 
       {/* VALUE PROPOSITION */}
-      <section className="home-section">
+      <section className="page-section">
         <div className="section-container">
           <Grid gap={{ base: 40, md: 72 }} align="center">
             <GridCol span={{ base: 12, md: 5 }}>
@@ -180,7 +181,7 @@ export default async function HomePage() {
       </section>
 
       {/* PRACTICE AREAS */}
-      <section className="home-section home-tint">
+      <section className="page-section bg-tint">
         <div className="section-container">
           <Grid gap={{ base: 32, md: 72 }}>
             <GridCol span={{ base: 12, md: 4 }}>
@@ -265,7 +266,7 @@ export default async function HomePage() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="home-section">
+      <section className="page-section">
         <div className="section-container">
           <Grid gap={32} align="flex-end" mb={56}>
             <GridCol span={{ base: 12, md: 9 }}>
@@ -291,7 +292,7 @@ export default async function HomePage() {
 
           <SimpleGrid cols={{ base: 1, md: 3 }} spacing={{ base: 32, md: 48 }}>
             {whyChooseUsItems.map((item) => (
-              <div key={item.title} className="home-why-item">
+              <div key={item.title} className="ruled-item">
                 <Title
                   order={3}
                   fz={22}
@@ -359,33 +360,14 @@ export default async function HomePage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="home-cta" style={{ marginTop: '5rem' }}>
-        <div className="section-container">
-          <Stack align="center" ta="center" gap="lg" maw={720} mx="auto">
-            <Title
-              order={2}
-              fz={{ base: 30, md: 42 }}
-              ff={HEADING_FONT}
-              c="brand.9"
-              lh={1.18}
-            >
-              {home.finalCtaTitle}
-            </Title>
-            <Text c="dark.5" fz="lg" lh={1.65}>
-              {home.finalCtaBody}
-            </Text>
-            <Group gap="md" justify="center" mt="xs">
-              <LinkButton href="/contact" size="md">
-                {home.finalCtaPrimary}
-              </LinkButton>
-              <LinkButton href="/contact" size="md" variant="outline">
-                {home.finalCtaSecondary}
-              </LinkButton>
-            </Group>
-          </Stack>
-          <PorticoArt className="home-portico" background="var(--pck-tint)" />
-        </div>
-      </section>
+      <ClosingCta title={home.finalCtaTitle} body={home.finalCtaBody}>
+        <LinkButton href="/contact" size="md">
+          {home.finalCtaPrimary}
+        </LinkButton>
+        <LinkButton href="/contact" size="md" variant="outline">
+          {home.finalCtaSecondary}
+        </LinkButton>
+      </ClosingCta>
     </>
   );
 }

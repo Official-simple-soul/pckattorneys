@@ -1,302 +1,300 @@
-import { Badge, Box, Card, Grid, GridCol, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import { IconCheck } from "@tabler/icons-react";
+import Image from "next/image";
+import { Grid, GridCol, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { getAboutPage } from "@/lib/content";
 import { asStringArray, asTitleBodyArray } from "@/lib/types";
-import { Reveal } from "@/components/reveal";
-import { GradientMesh } from "@/components/decorative";
+import { LEGAL_IMAGES } from "@/lib/legal-images";
+import { LEGAL_HISTORY } from "@/lib/legal-history";
+import { PageHero } from "@/components/page-hero";
+import { ClosingCta } from "@/components/closing-cta";
 import { LinkButton } from "@/components/ui/link-button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+};
+
+const HEADING_FONT = "var(--mantine-heading-font-family)";
+
+function SectionTitle({ children, onNavy = false }: { children: React.ReactNode; onNavy?: boolean }) {
+  return (
+    <Title order={2} fz={{ base: 30, md: 40 }} ff={HEADING_FONT} c={onNavy ? "white" : "brand.9"} lh={1.18}>
+      {children}
+    </Title>
+  );
+}
+
+function Paragraphs({ text, onNavy = false }: { text: string; onNavy?: boolean }) {
+  return (
+    <Stack gap="md" maw={680}>
+      {text
+        .split("\n\n")
+        .filter(Boolean)
+        .map((para, i) => (
+          <Text key={i} c={onNavy ? "gray.3" : "dark.5"} fz="lg" lh={1.7}>
+            {para}
+          </Text>
+        ))}
+    </Stack>
+  );
+}
 
 export default async function AboutPage() {
   const about = await getAboutPage();
 
-  const introParas = about.intro.split("\n\n");
-  const storyParas = about.storyBody.split("\n\n");
-  const philosophyParas = about.philosophyBody.split("\n\n");
+  const [introLead, ...introRest] = about.intro.split("\n\n").filter(Boolean);
   const philosophyQuestions = asStringArray(about.philosophyQuestions);
   const approachItems = asTitleBodyArray(about.approachItems);
   const whoWeServeItems = asTitleBodyArray(about.whoWeServeItems);
   const globalPoints = asStringArray(about.globalPoints);
   const standardPoints = asStringArray(about.standardPoints);
+  const { royalCourts, blackstone } = LEGAL_IMAGES;
 
   return (
     <>
-      {/* HERO */}
-      <Box
-        component="section"
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          background:
-            "linear-gradient(160deg, var(--mantine-color-ink-9) 0%, var(--mantine-color-brand-9) 60%, var(--mantine-color-ink-8) 100%)",
-        }}
-        pt={{ base: 130, md: 160 }}
-        pb={{ base: 70, md: 90 }}
-      >
-        <GradientMesh variant="hero" />
-        <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
-          <Reveal>
-            <Badge variant="light" color="gold" size="lg" radius="sm" mb="md" styles={{ root: { textTransform: "none" } }}>
-              About the Firm
-            </Badge>
-            <Title order={1} c="white" fz={{ base: 32, md: 48 }} ff="var(--mantine-heading-font-family)" maw={800} lh={1.15}>
-              {about.heroSubtitle}
-            </Title>
-          </Reveal>
-        </div>
-      </Box>
+      <PageHero
+        above={
+          <Text c="gold.4" fw={500} size="sm">
+            {about.heroTitle}
+          </Text>
+        }
+        title={about.heroSubtitle}
+        image={royalCourts}
+      />
 
       {/* INTRO */}
-      <Box py={{ base: 56, md: 88 }}>
+      <section className="page-section">
         <div className="section-container">
-          <Stack gap="md" maw={820}>
-            {introParas.map((para, i) => (
-              <Reveal key={i} delay={i * 0.08}>
-                <Text c="dark.4" fz="md" lh={1.75}>
-                  {para}
-                </Text>
-              </Reveal>
-            ))}
-          </Stack>
-        </div>
-      </Box>
-
-      {/* OUR STORY */}
-      <Box py={{ base: 56, md: 88 }} style={{ backgroundColor: "var(--mantine-color-gray-0)" }}>
-        <div className="section-container">
-          <Grid gap={{ base: 32, md: 64 }}>
-            <GridCol span={{ base: 12, md: 4 }}>
-              <Reveal>
-                <Text tt="uppercase" fw={600} size="sm" c="brand.7">
-                  Our Story
-                </Text>
-                <Title order={2} fz={{ base: 26, md: 32 }} ff="var(--mantine-heading-font-family)" c="ink.9" mt={4}>
-                  {about.storyTitle}
-                </Title>
-              </Reveal>
-            </GridCol>
-            <GridCol span={{ base: 12, md: 8 }}>
-              <Stack gap="md">
-                {storyParas.map((para, i) => (
-                  <Reveal key={i} delay={i * 0.08}>
-                    <Text c="dark.4" fz="md" lh={1.75}>
-                      {para}
-                    </Text>
-                  </Reveal>
+          <Grid gap={{ base: 40, md: 72 }} align="center">
+            <GridCol span={{ base: 12, md: 7 }}>
+              <Stack gap="md" maw={680}>
+                {introLead && (
+                  <Text fz={{ base: 20, md: 23 }} ff={HEADING_FONT} c="brand.9" lh={1.5}>
+                    {introLead}
+                  </Text>
+                )}
+                {introRest.map((para, i) => (
+                  <Text key={i} c="dark.5" fz="lg" lh={1.7}>
+                    {para}
+                  </Text>
                 ))}
               </Stack>
             </GridCol>
+            <GridCol span={{ base: 12, md: 5 }}>
+              <figure className="plate about-plate">
+                <div className="plate-frame">
+                  <Image
+                    src={blackstone.src}
+                    alt={blackstone.alt}
+                    width={blackstone.width}
+                    height={blackstone.height}
+                    sizes="(min-width: 62em) 34vw, 100vw"
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                </div>
+                <figcaption className="plate-caption">{blackstone.caption}</figcaption>
+              </figure>
+            </GridCol>
           </Grid>
         </div>
-      </Box>
+      </section>
+
+      {/* OUR STORY */}
+      <section className="page-section bg-tint">
+        <div className="section-container">
+          <Grid gap={{ base: 24, md: 72 }}>
+            <GridCol span={{ base: 12, md: 4 }}>
+              <SectionTitle>{about.storyTitle}</SectionTitle>
+            </GridCol>
+            <GridCol span={{ base: 12, md: 8 }}>
+              <Paragraphs text={about.storyBody} />
+            </GridCol>
+          </Grid>
+        </div>
+      </section>
 
       {/* MISSION / VISION */}
-      <Box py={{ base: 56, md: 88 }}>
+      <section className="page-section">
         <div className="section-container">
-          <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl">
-            <Reveal>
-              <Card padding="xl" radius="md" withBorder h="100%">
-                <Text tt="uppercase" fw={600} size="sm" c="brand.7" mb="sm">
-                  Our Mission
-                </Text>
-                <Text fz="lg" c="ink.9" lh={1.6} fw={500}>
-                  {about.missionText}
-                </Text>
-              </Card>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <Card padding="xl" radius="md" withBorder h="100%">
-                <Text tt="uppercase" fw={600} size="sm" c="brand.7" mb="sm">
-                  Our Vision
-                </Text>
-                <Text fz="lg" c="ink.9" lh={1.6} fw={500}>
-                  {about.visionText}
-                </Text>
-              </Card>
-            </Reveal>
-          </SimpleGrid>
+          <div className="statement-pair">
+            <div>
+              <Title order={2} fz="md" fw={600} ff="inherit" c="gold.8" mb="md">
+                Our mission
+              </Title>
+              <Text fz={{ base: 22, md: 27 }} ff={HEADING_FONT} c="brand.9" lh={1.4}>
+                {about.missionText}
+              </Text>
+            </div>
+            <div>
+              <Title order={2} fz="md" fw={600} ff="inherit" c="gold.8" mb="md">
+                Our vision
+              </Title>
+              <Text fz={{ base: 22, md: 27 }} ff={HEADING_FONT} c="brand.9" lh={1.4}>
+                {about.visionText}
+              </Text>
+            </div>
+          </div>
         </div>
-      </Box>
+      </section>
 
       {/* PHILOSOPHY */}
-      <Box py={{ base: 56, md: 88 }} style={{ backgroundColor: "var(--mantine-color-ink-9)" }}>
+      <section className="page-section bg-navy">
         <div className="section-container">
-          <Grid gap={{ base: 32, md: 64 }} align="center">
+          <Grid gap={{ base: 40, md: 72 }}>
             <GridCol span={{ base: 12, md: 6 }}>
-              <Reveal>
-                <Text tt="uppercase" fw={600} size="sm" c="gold.5" mb="xs">
-                  Our Philosophy
-                </Text>
-                <Title order={2} fz={{ base: 26, md: 32 }} ff="var(--mantine-heading-font-family)" c="white" mb="md">
-                  {about.philosophyTitle}
-                </Title>
-                <Stack gap="sm">
-                  {philosophyParas.map((para, i) => (
-                    <Text key={i} c="gray.3" fz="md" lh={1.75}>
-                      {para}
-                    </Text>
-                  ))}
-                </Stack>
-              </Reveal>
+              <Stack gap="lg">
+                <SectionTitle onNavy>{about.philosophyTitle}</SectionTitle>
+                <Paragraphs text={about.philosophyBody} onNavy />
+              </Stack>
             </GridCol>
             <GridCol span={{ base: 12, md: 6 }}>
-              <Reveal delay={0.1}>
-                <Stack gap="sm">
-                  {philosophyQuestions.map((q) => (
-                    <Group
-                      key={q}
-                      p="md"
-                      style={{ border: "1px solid color-mix(in srgb, white 14%, transparent)", borderRadius: "var(--mantine-radius-md)" }}
-                      wrap="nowrap"
-                    >
-                      <IconCheck size={18} color="var(--mantine-color-gold-5)" style={{ flexShrink: 0 }} />
-                      <Text c="gray.2" size="sm" fw={500}>
-                        {q}
-                      </Text>
-                    </Group>
-                  ))}
-                </Stack>
-              </Reveal>
+              <ul className="question-list">
+                {philosophyQuestions.map((q) => (
+                  <li key={q}>{q}</li>
+                ))}
+              </ul>
             </GridCol>
           </Grid>
         </div>
-      </Box>
+      </section>
 
       {/* APPROACH */}
-      <Box py={{ base: 56, md: 88 }}>
+      <section className="page-section">
         <div className="section-container">
-          <Reveal>
-            <Title order={2} fz={{ base: 26, md: 32 }} ff="var(--mantine-heading-font-family)" c="ink.9" mb={40}>
-              Our Approach
-            </Title>
-          </Reveal>
-          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="xl">
-            {approachItems.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.08}>
-                <Box>
-                  <Box style={{ width: 36, height: 2, backgroundColor: "var(--mantine-color-gold-6)", marginBottom: 16 }} />
-                  <Text fw={600} fz="md" c="ink.9" mb={8} ff="var(--mantine-heading-font-family)">
-                    {item.title}
-                  </Text>
-                  <Text size="sm" c="dark.3" lh={1.7}>
-                    {item.body}
-                  </Text>
-                </Box>
-              </Reveal>
+          <div style={{ marginBottom: 48 }}>
+            <SectionTitle>Our Approach</SectionTitle>
+          </div>
+          <SimpleGrid cols={{ base: 1, sm: 2, lg: approachItems.length >= 4 ? 4 : 3 }} spacing={{ base: 32, md: 40 }}>
+            {approachItems.map((item) => (
+              <div key={item.title} className="ruled-item">
+                <Title order={3} fz={22} ff={HEADING_FONT} c="brand.9" lh={1.3} mb="sm">
+                  {item.title}
+                </Title>
+                <Text c="dark.5" lh={1.65}>
+                  {item.body}
+                </Text>
+              </div>
             ))}
           </SimpleGrid>
         </div>
-      </Box>
+      </section>
 
       {/* WHO WE SERVE */}
-      <Box py={{ base: 56, md: 88 }} style={{ backgroundColor: "var(--mantine-color-gray-0)" }}>
+      <section className="page-section bg-tint">
         <div className="section-container">
-          <Reveal>
-            <Title order={2} fz={{ base: 26, md: 32 }} ff="var(--mantine-heading-font-family)" c="ink.9" mb={40}>
-              Who We Serve
-            </Title>
-          </Reveal>
-          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
-            {whoWeServeItems.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.08}>
-                <Card padding="lg" radius="md" withBorder h="100%">
-                  <Text fw={600} fz="md" c="ink.9" mb={8}>
-                    {item.title}
-                  </Text>
-                  <Text size="sm" c="dark.3" lh={1.7}>
-                    {item.body}
-                  </Text>
-                </Card>
-              </Reveal>
-            ))}
-          </SimpleGrid>
+          <Grid gap={{ base: 24, md: 72 }}>
+            <GridCol span={{ base: 12, md: 4 }}>
+              <SectionTitle>Who We Serve</SectionTitle>
+            </GridCol>
+            <GridCol span={{ base: 12, md: 8 }}>
+              <div className="ruled-list">
+                {whoWeServeItems.map((item) => (
+                  <div key={item.title}>
+                    <Title order={3} fz={{ base: 20, md: 22 }} ff={HEADING_FONT} c="brand.9" lh={1.3} mb={6}>
+                      {item.title}
+                    </Title>
+                    <Text c="dark.5" lh={1.65}>
+                      {item.body}
+                    </Text>
+                  </div>
+                ))}
+              </div>
+            </GridCol>
+          </Grid>
         </div>
-      </Box>
+      </section>
+
+      {/* LEGAL HISTORY */}
+      <section className="page-section">
+        <div className="section-container">
+          <Stack gap="md" maw={720} mb={56}>
+            <SectionTitle>The Tradition We Practise In</SectionTitle>
+            <Text c="dark.5" fz="lg" lh={1.65}>
+              Nigeria&apos;s legal system draws on the English common law alongside customary and Islamic law. These are
+              some of the moments that shaped the profession our lawyers belong to.
+            </Text>
+          </Stack>
+          <ol className="timeline">
+            {LEGAL_HISTORY.map((entry) => (
+              <li key={entry.year} className="timeline-entry">
+                <p className="timeline-year">{entry.year}</p>
+                <div className="timeline-body">
+                  <div>
+                    <Title order={3} fz={{ base: 20, md: 24 }} ff={HEADING_FONT} c="brand.9" lh={1.3} mb={6}>
+                      {entry.title}
+                    </Title>
+                    <Text c="dark.5" lh={1.65} maw={560}>
+                      {entry.body}
+                    </Text>
+                  </div>
+                  {entry.image && (
+                    <div className="timeline-image plate-frame">
+                      <Image
+                        src={entry.image.src}
+                        alt={entry.image.alt}
+                        fill
+                        sizes="(min-width: 62em) 240px, 40vw"
+                        style={{ objectFit: "cover", objectPosition: "left top" }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
       {/* GLOBAL PERSPECTIVE */}
-      <Box py={{ base: 56, md: 88 }}>
+      <section className="page-section bg-tint">
         <div className="section-container">
-          <Grid gap={{ base: 32, md: 64 }}>
+          <Grid gap={{ base: 32, md: 72 }}>
             <GridCol span={{ base: 12, md: 5 }}>
-              <Reveal>
-                <Title order={2} fz={{ base: 26, md: 32 }} ff="var(--mantine-heading-font-family)" c="ink.9" mb="md">
-                  {about.globalTitle}
-                </Title>
-                <Text c="dark.4" fz="md" lh={1.75}>
+              <Stack gap="lg">
+                <SectionTitle>{about.globalTitle}</SectionTitle>
+                <Text c="dark.5" fz="lg" lh={1.7}>
                   {about.globalBody}
                 </Text>
-              </Reveal>
+              </Stack>
             </GridCol>
             <GridCol span={{ base: 12, md: 7 }}>
-              <Reveal delay={0.1}>
-                <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-                  {globalPoints.map((point) => (
-                    <Group key={point} align="flex-start" wrap="nowrap" gap="sm">
-                      <IconCheck size={18} color="var(--mantine-color-brand-6)" style={{ flexShrink: 0, marginTop: 3 }} />
-                      <Text size="sm" c="dark.4" lh={1.6}>
-                        {point}
-                      </Text>
-                    </Group>
-                  ))}
-                </SimpleGrid>
-              </Reveal>
+              <ul className="dash-list dash-list-cols about-points">
+                {globalPoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
             </GridCol>
           </Grid>
         </div>
-      </Box>
+      </section>
 
       {/* STANDARD */}
-      <Box py={{ base: 56, md: 88 }} style={{ backgroundColor: "var(--mantine-color-ink-9)" }}>
+      <section className="page-section bg-navy">
         <div className="section-container">
-          <Grid gap={{ base: 32, md: 64 }}>
+          <Grid gap={{ base: 32, md: 72 }}>
             <GridCol span={{ base: 12, md: 6 }}>
-              <Reveal>
-                <Title order={2} fz={{ base: 26, md: 32 }} ff="var(--mantine-heading-font-family)" c="white" mb="md">
-                  {about.standardTitle}
-                </Title>
-                <Text c="gray.3" fz="md" lh={1.75}>
+              <Stack gap="lg">
+                <SectionTitle onNavy>{about.standardTitle}</SectionTitle>
+                <Text c="gray.3" fz="lg" lh={1.7}>
                   {about.standardIntro}
                 </Text>
-              </Reveal>
+              </Stack>
             </GridCol>
             <GridCol span={{ base: 12, md: 6 }}>
-              <Reveal delay={0.1}>
-                <Stack gap="sm">
-                  {standardPoints.map((point) => (
-                    <Group key={point} wrap="nowrap" gap="sm">
-                      <Box
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          backgroundColor: "var(--mantine-color-gold-5)",
-                          flexShrink: 0,
-                        }}
-                      />
-                      <Text c="gray.2" fz="md" fw={500}>
-                        {point}
-                      </Text>
-                    </Group>
-                  ))}
-                </Stack>
-              </Reveal>
+              <ul className="standard-list">
+                {standardPoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
             </GridCol>
           </Grid>
         </div>
-      </Box>
+      </section>
 
-      {/* CLOSING CTA */}
-      <Box py={{ base: 56, md: 80 }} style={{ background: "linear-gradient(135deg, var(--mantine-color-brand-8), var(--mantine-color-brand-9))" }}>
-        <div className="section-container">
-          <Stack align="center" ta="center" gap="lg" maw={720} mx="auto">
-            <Text c="gray.3" fz="md" lh={1.7}>
-              {about.closingBody}
-            </Text>
-            <LinkButton href="/contact" size="lg" radius="sm" color="gold" c="ink.9">
-              Schedule a Confidential Consultation
-            </LinkButton>
-          </Stack>
-        </div>
-      </Box>
+      <ClosingCta body={about.closingBody}>
+        <LinkButton href="/contact" size="md">
+          Schedule a Confidential Consultation
+        </LinkButton>
+      </ClosingCta>
     </>
   );
 }
