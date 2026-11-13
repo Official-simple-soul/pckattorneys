@@ -39,4 +39,21 @@ export const LEGAL_IMAGES = {
     caption: "The Grand Hall, Central Criminal Court (the Old Bailey), London.",
     source: "https://commons.wikimedia.org/wiki/File:Central_Criminal_Court_of_England_and_Wales_(The_Old_Bailey)_The_Grand_Hall.jpg",
   },
+  royalCourts: {
+    src: "/images/legal/royal-courts-of-justice.webp",
+    width: 1600,
+    height: 1067,
+    alt: "Gothic stone front of the Royal Courts of Justice with a tall central spire",
+    caption: "Royal Courts of Justice, London.",
+    source: "https://commons.wikimedia.org/wiki/File:Royal_Courts_of_Justice_2019.jpg",
+  },
+  blackstone: {
+    src: "/images/legal/blackstone-commentaries-1765.webp",
+    width: 1000,
+    height: 1349,
+    alt: "Printed title page reading Commentaries on the Laws of England, Book the First, by William Blackstone, Oxford, 1765",
+    caption: "Blackstone's Commentaries on the Laws of England, first edition, 1765.",
+    source:
+      "https://commons.wikimedia.org/wiki/File:William_Blackstone,_Commentaries_on_the_Laws_of_England_(1st_ed,_1765,_vol_I,_title_page).jpg",
+  },
 } as const;

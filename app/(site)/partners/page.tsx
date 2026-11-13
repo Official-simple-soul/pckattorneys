@@ -69,7 +69,7 @@ export default async function PartnersPage() {
                   </div>
 
                   {(partner.email || partner.phone) && (
-                    <dl className="partner-contact">
+                    <dl className="detail-list">
                       {partner.email && (
                         <div>
                           <dt>Email</dt>
@@ -121,7 +121,7 @@ export default async function PartnersPage() {
                       <Title order={3} fz={22} ff={HEADING_FONT} c="brand.9" mb="md">
                         Practice focus
                       </Title>
-                      <ul>
+                      <ul className="dash-list dash-list-cols">
                         {focus.map((f) => (
                           <li key={f}>{f}</li>
                         ))}

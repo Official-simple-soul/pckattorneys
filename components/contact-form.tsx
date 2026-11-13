@@ -52,7 +52,7 @@ export function ContactForm({ practiceAreaOptions }: { practiceAreaOptions: stri
 
   if (submitted) {
     return (
-      <Alert icon={<IconCheck size={18} />} color="green" radius="md" title="Request received">
+      <Alert icon={<IconCheck size={18} />} color="green" radius="sm" title="Request sent">
         Thank you for reaching out. A member of our team will respond promptly to arrange your
         consultation.
       </Alert>
@@ -91,8 +91,8 @@ export function ContactForm({ practiceAreaOptions }: { practiceAreaOptions: stri
           {...form.getInputProps("message")}
         />
         <Group justify="flex-end" mt="sm">
-          <Button type="submit" size="md" radius="sm" loading={pending}>
-            Submit Request
+          <Button type="submit" size="md" loading={pending}>
+            Send request
           </Button>
         </Group>
       </Stack>

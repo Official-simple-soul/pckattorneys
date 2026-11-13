@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Burger,
@@ -34,20 +34,25 @@ export function HeaderNav({
   practiceAreas: PracticeAreaLink[];
 }) {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [practiceOpen, setPracticeOpen] = useState(false);
   const pathname = usePathname();
-
-  // Force-close the practice areas dropdown whenever the route changes
-  // (covers link clicks, back/forward nav) since it can't rely on mouseleave firing.
-  useEffect(() => {
-    setPracticeOpen(false);
-  }, [pathname]);
+  // The dropdown remembers the page it was opened on, so it is closed on any other page
+  // (link clicks, back/forward) without relying on mouseleave firing.
+  const [practiceOpenOn, setPracticeOpenOn] = useState<string | null>(null);
+  const practiceOpen = practiceOpenOn === pathname;
+  const setPracticeOpen = (open: boolean | ((current: boolean) => boolean)) => {
+    const next = typeof open === "function" ? open(practiceOpen) : open;
+    setPracticeOpenOn(next ? pathname : null);
+  };
 
   const navLinks = [
     { href: "/about", label: "About" },
     { href: "/partners", label: "Partners" },
     { href: "/contact", label: "Contact" },
   ];
+
+  // A section counts as current on its own page and on any page beneath it.
+  const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const practiceCurrent = isCurrent("/practice-areas");
 
   return (
     <Box
@@ -87,13 +92,7 @@ export function HeaderNav({
                   </Text>
                 )}
               </Box>
-              <Text
-                size="lg"
-                c="brand.9"
-                ff="var(--mantine-heading-font-family)"
-                visibleFrom="sm"
-                lineClamp={1}
-              >
+              <Text size="lg" c="brand.9" ff="var(--mantine-heading-font-family)" visibleFrom="sm" lineClamp={1}>
                 {firmName}
               </Text>
             </Group>
@@ -115,33 +114,37 @@ export function HeaderNav({
                   onMouseLeave={() => setPracticeOpen(false)}
                   onClick={() => setPracticeOpen((o) => !o)}
                   style={{ display: "flex", alignItems: "center", gap: 4 }}
+                  className="nav-link"
+                  data-active={practiceCurrent || undefined}
                 >
-                  <Text size="sm" fw={500} c="dark.6">
+                  <Text size="sm" fw={practiceCurrent ? 600 : 500} c={practiceCurrent ? "brand.9" : "dark.6"}>
                     Practice Areas
                   </Text>
                   <IconChevronDown size={14} />
                 </UnstyledButton>
               </Popover.Target>
-              <Popover.Dropdown
-                onMouseEnter={() => setPracticeOpen(true)}
-                onMouseLeave={() => setPracticeOpen(false)}
-              >
+              <Popover.Dropdown onMouseEnter={() => setPracticeOpen(true)} onMouseLeave={() => setPracticeOpen(false)}>
                 <SimpleGrid cols={2} spacing="xs">
-                  {practiceAreas.map((area) => (
-                    <UnstyledButton
-                      key={area.slug}
-                      component={Link}
-                      href={`/practice-areas/${area.slug}`}
-                      onClick={() => setPracticeOpen(false)}
-                      p="xs"
-                      style={{ borderRadius: "var(--mantine-radius-sm)" }}
-                      className="hover-bg"
-                    >
-                      <Text size="sm" fw={500} c="dark.7">
-                        {area.shortTitle}
-                      </Text>
-                    </UnstyledButton>
-                  ))}
+                  {practiceAreas.map((area) => {
+                    const current = pathname === `/practice-areas/${area.slug}`;
+                    return (
+                      <UnstyledButton
+                        key={area.slug}
+                        component={Link}
+                        href={`/practice-areas/${area.slug}`}
+                        onClick={() => setPracticeOpen(false)}
+                        p="xs"
+                        style={{ borderRadius: "var(--mantine-radius-sm)" }}
+                        className="hover-bg"
+                        aria-current={current ? "page" : undefined}
+                        data-active={current || undefined}
+                      >
+                        <Text size="sm" fw={current ? 600 : 500} c={current ? "brand.9" : "dark.7"}>
+                          {area.shortTitle}
+                        </Text>
+                      </UnstyledButton>
+                    );
+                  })}
                 </SimpleGrid>
                 <Divider my="xs" />
                 <UnstyledButton component={Link} href="/practice-areas" onClick={() => setPracticeOpen(false)}>
@@ -152,19 +155,25 @@ export function HeaderNav({
               </Popover.Dropdown>
             </Popover>
 
-            {navLinks.map((link) => (
-              <Text
-                key={link.href}
-                component={Link}
-                href={link.href}
-                size="sm"
-                fw={500}
-                c="dark.6"
-                style={{ textDecoration: "none" }}
-              >
-                {link.label}
-              </Text>
-            ))}
+            {navLinks.map((link) => {
+              const current = isCurrent(link.href);
+              return (
+                <Text
+                  key={link.href}
+                  component={Link}
+                  href={link.href}
+                  size="sm"
+                  fw={current ? 600 : 500}
+                  c={current ? "brand.9" : "dark.6"}
+                  className="nav-link"
+                  data-active={current || undefined}
+                  aria-current={current ? "page" : undefined}
+                  style={{ textDecoration: "none" }}
+                >
+                  {link.label}
+                </Text>
+              );
+            })}
           </Group>
 
           <Group visibleFrom="md">
@@ -183,34 +192,47 @@ export function HeaderNav({
             Practice Areas
           </Text>
           <Stack gap="sm">
-            {practiceAreas.map((area) => (
-              <Text
-                key={area.slug}
-                component={Link}
-                href={`/practice-areas/${area.slug}`}
-                onClick={closeDrawer}
-                size="sm"
-                style={{ textDecoration: "none" }}
-                c="dark.7"
-              >
-                {area.shortTitle}
-              </Text>
-            ))}
+            {practiceAreas.map((area) => {
+              const current = pathname === `/practice-areas/${area.slug}`;
+              return (
+                <Text
+                  key={area.slug}
+                  component={Link}
+                  href={`/practice-areas/${area.slug}`}
+                  onClick={closeDrawer}
+                  size="sm"
+                  style={{ textDecoration: "none" }}
+                  c={current ? "brand.9" : "dark.7"}
+                  fw={current ? 600 : 400}
+                  className="drawer-link"
+                  data-active={current || undefined}
+                  aria-current={current ? "page" : undefined}
+                >
+                  {area.shortTitle}
+                </Text>
+              );
+            })}
           </Stack>
           <Divider />
-          {navLinks.map((link) => (
-            <Text
-              key={link.href}
-              component={Link}
-              href={link.href}
-              onClick={closeDrawer}
-              fw={500}
-              style={{ textDecoration: "none" }}
-              c="dark.7"
-            >
-              {link.label}
-            </Text>
-          ))}
+          {navLinks.map((link) => {
+            const current = isCurrent(link.href);
+            return (
+              <Text
+                key={link.href}
+                component={Link}
+                href={link.href}
+                onClick={closeDrawer}
+                fw={current ? 600 : 500}
+                style={{ textDecoration: "none" }}
+                c={current ? "brand.9" : "dark.7"}
+                className="drawer-link"
+                data-active={current || undefined}
+                aria-current={current ? "page" : undefined}
+              >
+                {link.label}
+              </Text>
+            );
+          })}
           <Button component={Link} href="/contact" onClick={closeDrawer} fullWidth mt="md">
             Schedule a Consultation
           </Button>
