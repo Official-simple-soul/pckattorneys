@@ -669,7 +669,7 @@ async function main() {
       name: "David E. Umem",
       credentials: "Esq.",
       title: "Principal Partner",
-      photoUrl: "",
+      photoUrl: "/images/partners/david-umem.webp",
       email: "davidumem@pckattorneys.com",
       phone: "+234 808 789 6082",
       quote:
@@ -688,7 +688,7 @@ async function main() {
       name: "Grace Kalu",
       credentials: "Esq.",
       title: "Managing Partner",
-      photoUrl: "",
+      photoUrl: "/images/partners/grace-kalu.webp",
       email: "gracekalu@pckattorneys.com",
       phone: "+234 806 717 6550",
       quote: "",
@@ -705,17 +705,22 @@ async function main() {
   ];
 
   // Same rule as practice areas: only create partners that don't exist yet, never overwrite.
-  // The one exception is contact details, added after partners were first seeded: a row with
-  // neither an email nor a phone gets them filled in, while anything set in admin is left alone.
+  // The exceptions are contact details and photos, added after partners were first seeded: they
+  // are filled in only where still blank, so anything set in admin is left alone.
   for (const partner of partners) {
     const existing = await prisma.partner.findFirst({ where: { name: partner.name } });
     if (!existing) {
       await prisma.partner.create({ data: partner });
-    } else if (!existing.email && !existing.phone) {
-      await prisma.partner.update({
-        where: { id: existing.id },
-        data: { email: partner.email, phone: partner.phone },
-      });
+      continue;
+    }
+    const backfill = {};
+    if (!existing.email && !existing.phone) {
+      backfill.email = partner.email;
+      backfill.phone = partner.phone;
+    }
+    if (!existing.photoUrl) backfill.photoUrl = partner.photoUrl;
+    if (Object.keys(backfill).length > 0) {
+      await prisma.partner.update({ where: { id: existing.id }, data: backfill });
     }
   }
 

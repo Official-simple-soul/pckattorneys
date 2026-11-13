@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 html,
 body {
@@ -18,7 +18,7 @@ body {
 
 .section-container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px;
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
@@ -102,7 +102,7 @@ body {
 @media (min-width: 62em) {
   .home-hero-stage {
     position: relative;
-    max-width: 1280px;
+    max-width: 1440px;
     margin-inline: auto;
   }
 
@@ -280,7 +280,9 @@ body {
   border: 1px solid var(--mantine-color-gold-6);
   border-radius: 50%;
   color: var(--mantine-color-brand-9);
-  transition: background-color 150ms ease, color 150ms ease;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 .practice-row-title {
@@ -375,4 +377,193 @@ body {
   height: auto;
   margin: 3.5rem auto 0;
   color: var(--mantine-color-brand-9);
+}
+
+/* --- Inner page hero --- */
+
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--mantine-color-brand-9);
+}
+
+.page-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding-block: 4rem;
+}
+
+.page-hero-text {
+  max-width: 44rem;
+}
+
+.page-hero-image {
+  display: none;
+  position: absolute;
+}
+
+.page-hero-caption {
+  display: none;
+}
+
+@media (min-width: 62em) {
+  .page-hero-inner {
+    padding-block: 6.5rem;
+  }
+
+  .page-hero-text {
+    max-width: 50%;
+  }
+
+  .page-hero-image {
+    display: block;
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 56%;
+    mask-image: linear-gradient(to right, transparent 0%, black 45%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 45%);
+    opacity: 0.85;
+  }
+
+  .page-hero-caption {
+    display: block;
+    position: absolute;
+    right: 2.5rem;
+    bottom: 1rem;
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--mantine-color-gray-3);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 60%);
+  }
+}
+
+/* --- Partners --- */
+
+.partner {
+  padding-block: 4rem;
+}
+
+.partner + .partner {
+  border-top: 1px solid var(--pck-rule);
+}
+
+.partner-grid {
+  display: grid;
+  grid-template-areas: 'head' 'aside' 'body';
+  gap: 2rem;
+}
+
+.partner-head {
+  grid-area: head;
+}
+
+.partner-aside {
+  grid-area: aside;
+}
+
+@media (max-width: 61.99em) {
+  .partner-portrait {
+    max-width: 16rem;
+  }
+}
+
+.partner-body {
+  grid-area: body;
+}
+
+@media (min-width: 62em) {
+  .partner {
+    padding-block: 6rem;
+  }
+
+  .partner-grid {
+    grid-template-columns: 4fr 8fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'aside head' 'aside body';
+    column-gap: 4.5rem;
+  }
+
+  .partner-aside {
+    align-self: start;
+    position: sticky;
+    top: 108px;
+  }
+}
+
+.partner-portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--mantine-color-brand-9);
+  display: grid;
+  place-items: center;
+}
+
+.partner-seal {
+  width: 78%;
+  height: auto;
+  color: var(--mantine-color-gold-5);
+}
+
+.partner-contact {
+  margin: 1.5rem 0 0;
+  border-top: 1px solid var(--mantine-color-brand-9);
+}
+
+.partner-contact > div {
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--pck-rule);
+}
+
+.partner-contact dt {
+  font-size: 0.875rem;
+  color: var(--mantine-color-dark-4);
+  margin-bottom: 0.125rem;
+}
+
+.partner-contact dd {
+  margin: 0;
+  font-size: 1.0625rem;
+  overflow-wrap: anywhere;
+}
+
+.partner-quote {
+  margin: 0 0 2rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--mantine-color-gold-6);
+  max-width: 680px;
+}
+
+.partner-focus {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--pck-rule);
+  max-width: 680px;
+}
+
+.partner-focus ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2 16rem;
+  column-gap: 2.5rem;
+}
+
+.partner-focus li {
+  position: relative;
+  break-inside: avoid;
+  padding: 0 0 0.75rem 1.25rem;
+  color: var(--mantine-color-dark-6);
+  line-height: 1.5;
+}
+
+.partner-focus li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.625rem;
+  height: 1px;
+  background: var(--mantine-color-gold-7);
 }

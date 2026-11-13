@@ -1,15 +1,24 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Box, Grid, GridCol, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons-react";
-import { getHomePage, getPracticeAreas, getSiteSettings } from "@/lib/content";
-import { asStringArray, asTitleBodyArray } from "@/lib/types";
-import { getPracticeIcon } from "@/lib/practice-icons";
-import { LEGAL_IMAGES } from "@/lib/legal-images";
-import { PorticoArt, ScalesArt } from "@/components/legal-art";
-import { LinkButton } from "@/components/ui/link-button";
+import Link from 'next/link';
+import Image from 'next/image';
+import {
+  Box,
+  Grid,
+  GridCol,
+  Group,
+  SimpleGrid,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
+import { IconChevronRight } from '@tabler/icons-react';
+import { getHomePage, getPracticeAreas, getSiteSettings } from '@/lib/content';
+import { asStringArray, asTitleBodyArray } from '@/lib/types';
+import { getPracticeIcon } from '@/lib/practice-icons';
+import { LEGAL_IMAGES } from '@/lib/legal-images';
+import { PorticoArt, ScalesArt } from '@/components/legal-art';
+import { LinkButton } from '@/components/ui/link-button';
 
-const HEADING_FONT = "var(--mantine-heading-font-family)";
+const HEADING_FONT = 'var(--mantine-heading-font-family)';
 
 export default async function HomePage() {
   const [home, settings, practiceAreas] = await Promise.all([
@@ -35,7 +44,12 @@ export default async function HomePage() {
             <Title
               order={1}
               className="home-hero-seq"
-              style={{ "--seq": "80ms", letterSpacing: "-0.01em" } as React.CSSProperties}
+              style={
+                {
+                  '--seq': '80ms',
+                  letterSpacing: '-0.01em',
+                } as React.CSSProperties
+              }
               c="white"
               lh={1.12}
               fz={{ base: 36, sm: 46, lg: 54 }}
@@ -45,29 +59,38 @@ export default async function HomePage() {
             </Title>
             <Text
               className="home-hero-seq"
-              style={{ "--seq": "160ms" } as React.CSSProperties}
+              style={{ '--seq': '160ms' } as React.CSSProperties}
               c="gray.3"
-              fz={{ base: "md", md: "lg" }}
+              fz={{ base: 'md', md: 'lg' }}
               lh={1.6}
             >
               {home.heroSubheadline}
             </Text>
             <Group
               className="home-hero-seq"
-              style={{ "--seq": "240ms" } as React.CSSProperties}
+              style={{ '--seq': '240ms' } as React.CSSProperties}
               gap="md"
               mt="xs"
             >
               <LinkButton href="/contact" size="md" color="gold.5" c="brand.9">
                 {home.heroPrimaryCta}
               </LinkButton>
-              <LinkButton href="/partners" size="md" variant="outline" color="gray.3" c="white">
+              <LinkButton
+                href="/partners"
+                size="md"
+                variant="outline"
+                color="gray.3"
+                c="white"
+              >
                 {home.heroSecondaryCta}
               </LinkButton>
             </Group>
           </Stack>
 
-          <div className="home-hero-figure home-hero-seq" style={{ "--seq": "120ms" } as React.CSSProperties}>
+          <div
+            className="home-hero-figure home-hero-seq"
+            style={{ '--seq': '120ms' } as React.CSSProperties}
+          >
             {home.heroImage ? (
               <div className="home-hero-photo">
                 <Image
@@ -76,7 +99,7 @@ export default async function HomePage() {
                   fill
                   priority
                   sizes="(min-width: 62em) 54vw, 100vw"
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             ) : (
@@ -109,25 +132,39 @@ export default async function HomePage() {
           <Grid gap={{ base: 40, md: 72 }} align="center">
             <GridCol span={{ base: 12, md: 5 }}>
               <figure className="plate">
-                <div className="plate-frame" style={{ aspectRatio: "4 / 5" }}>
+                <div className="plate-frame" style={{ aspectRatio: '4 / 5' }}>
                   <Image
                     src={magnaCarta.src}
                     alt={magnaCarta.alt}
                     fill
                     sizes="(min-width: 62em) 40vw, 100vw"
-                    style={{ objectFit: "cover", objectPosition: "left top" }}
+                    style={{ objectFit: 'cover', objectPosition: 'left top' }}
                   />
                 </div>
-                <figcaption className="plate-caption">{magnaCarta.caption}</figcaption>
+                <figcaption className="plate-caption">
+                  {magnaCarta.caption}
+                </figcaption>
               </figure>
             </GridCol>
             <GridCol span={{ base: 12, md: 7 }}>
-              <Title order={2} fz={{ base: 30, md: 42 }} ff={HEADING_FONT} c="brand.9" lh={1.18} mb="xl">
+              <Title
+                order={2}
+                fz={{ base: 30, md: 42 }}
+                ff={HEADING_FONT}
+                c="brand.9"
+                lh={1.18}
+                mb="xl"
+              >
                 {home.valuePropTitle}
               </Title>
               <Stack gap="md" maw={640}>
                 {valuePropLead && (
-                  <Text fz={{ base: 19, md: 21 }} ff={HEADING_FONT} c="brand.9" lh={1.5}>
+                  <Text
+                    fz={{ base: 19, md: 21 }}
+                    ff={HEADING_FONT}
+                    c="brand.9"
+                    lh={1.5}
+                  >
                     {valuePropLead}
                   </Text>
                 )}
@@ -148,16 +185,28 @@ export default async function HomePage() {
           <Grid gap={{ base: 32, md: 72 }}>
             <GridCol span={{ base: 12, md: 4 }}>
               <div className="home-sticky">
-                <Title order={2} fz={{ base: 30, md: 38 }} ff={HEADING_FONT} c="brand.9" lh={1.18} mb="xl">
+                <Title
+                  order={2}
+                  fz={{ base: 30, md: 38 }}
+                  ff={HEADING_FONT}
+                  c="brand.9"
+                  lh={1.18}
+                  mb="xl"
+                >
                   {home.practiceOverviewTitle}
                 </Title>
-                <Box visibleFrom="md" className="plate-frame" style={{ aspectRatio: "4 / 3" }} mb="xl">
+                <Box
+                  visibleFrom="md"
+                  className="plate-frame"
+                  style={{ aspectRatio: '4 / 3' }}
+                  mb="xl"
+                >
                   <Image
                     src={lawBooks.src}
                     alt={lawBooks.alt}
                     fill
                     sizes="33vw"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: 'cover' }}
                   />
                 </Box>
                 <LinkButton href="/practice-areas" variant="outline" size="md">
@@ -170,7 +219,11 @@ export default async function HomePage() {
                 {practiceAreas.map((area) => {
                   const Icon = getPracticeIcon(area.slug);
                   return (
-                    <Link key={area.id} href={`/practice-areas/${area.slug}`} className="practice-row">
+                    <Link
+                      key={area.id}
+                      href={`/practice-areas/${area.slug}`}
+                      className="practice-row"
+                    >
                       <span className="practice-row-ring">
                         <Icon size={20} stroke={1.5} aria-hidden />
                       </span>
@@ -187,11 +240,21 @@ export default async function HomePage() {
                         >
                           {area.shortTitle}
                         </Text>
-                        <Text component="span" display="block" c="dark.5" lh={1.55}>
+                        <Text
+                          component="span"
+                          display="block"
+                          c="dark.5"
+                          lh={1.55}
+                        >
                           {area.tagline}
                         </Text>
                       </span>
-                      <IconChevronRight className="practice-row-go" size={20} stroke={1.5} aria-hidden />
+                      <IconChevronRight
+                        className="practice-row-go"
+                        size={20}
+                        stroke={1.5}
+                        aria-hidden
+                      />
                     </Link>
                   );
                 })}
@@ -206,7 +269,15 @@ export default async function HomePage() {
         <div className="section-container">
           <Grid gap={32} align="flex-end" mb={56}>
             <GridCol span={{ base: 12, md: 9 }}>
-              <Title order={2} fz={{ base: 30, md: 42 }} ff={HEADING_FONT} c="brand.9" lh={1.18} maw={760} mb="md">
+              <Title
+                order={2}
+                fz={{ base: 30, md: 42 }}
+                ff={HEADING_FONT}
+                c="brand.9"
+                lh={1.18}
+                maw={760}
+                mb="md"
+              >
                 {home.whyChooseUsTitle}
               </Title>
               <Text c="dark.5" fz="lg" lh={1.65} maw={640}>
@@ -221,7 +292,14 @@ export default async function HomePage() {
           <SimpleGrid cols={{ base: 1, md: 3 }} spacing={{ base: 32, md: 48 }}>
             {whyChooseUsItems.map((item) => (
               <div key={item.title} className="home-why-item">
-                <Title order={3} fz={22} ff={HEADING_FONT} c="brand.9" lh={1.3} mb="sm">
+                <Title
+                  order={3}
+                  fz={22}
+                  ff={HEADING_FONT}
+                  c="brand.9"
+                  lh={1.3}
+                  mb="sm"
+                >
                   {item.title}
                 </Title>
                 <Text c="dark.5" lh={1.65}>
@@ -238,35 +316,59 @@ export default async function HomePage() {
         <div className="home-court-photo">
           <Image
             src={home.aboutPreviewImage || oldBaileyCourt.src}
-            alt={home.aboutPreviewImage ? home.aboutPreviewTitle : oldBaileyCourt.alt}
+            alt={
+              home.aboutPreviewImage
+                ? home.aboutPreviewTitle
+                : oldBaileyCourt.alt
+            }
             fill
             sizes="100vw"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: 'cover' }}
           />
         </div>
         <div className="section-container">
           <div className="home-court-layout">
             <div className="home-court-panel">
-              <Title order={2} fz={{ base: 28, md: 34 }} ff={HEADING_FONT} c="white" lh={1.2} mb="md">
+              <Title
+                order={2}
+                fz={{ base: 28, md: 34 }}
+                ff={HEADING_FONT}
+                c="white"
+                lh={1.2}
+                mb="md"
+              >
                 {home.aboutPreviewTitle}
               </Title>
               <Text c="gray.3" lh={1.65} mb="xl">
                 {home.aboutPreviewBody}
               </Text>
-              <LinkButton href="/about" variant="outline" color="gray.3" c="white">
+              <LinkButton
+                href="/about"
+                variant="outline"
+                color="gray.3"
+                c="white"
+              >
                 {home.aboutPreviewCta}
               </LinkButton>
             </div>
-            {!home.aboutPreviewImage && <p className="home-court-caption">{oldBaileyCourt.caption}</p>}
+            {!home.aboutPreviewImage && (
+              <p className="home-court-caption">{oldBaileyCourt.caption}</p>
+            )}
           </div>
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="home-cta" style={{ marginTop: "5rem" }}>
+      <section className="home-cta" style={{ marginTop: '5rem' }}>
         <div className="section-container">
           <Stack align="center" ta="center" gap="lg" maw={720} mx="auto">
-            <Title order={2} fz={{ base: 30, md: 42 }} ff={HEADING_FONT} c="brand.9" lh={1.18}>
+            <Title
+              order={2}
+              fz={{ base: 30, md: 42 }}
+              ff={HEADING_FONT}
+              c="brand.9"
+              lh={1.18}
+            >
               {home.finalCtaTitle}
             </Title>
             <Text c="dark.5" fz="lg" lh={1.65}>

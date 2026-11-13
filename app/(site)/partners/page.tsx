@@ -1,162 +1,139 @@
 import Image from "next/image";
-import { Anchor, Badge, Box, Divider, Grid, GridCol, Group, Stack, Text, Title } from "@mantine/core";
-import { IconMail, IconPhone, IconQuote } from "@tabler/icons-react";
-import { getPartners } from "@/lib/content";
+import { Anchor, Stack, Text, Title } from "@mantine/core";
+import { getPartners, getSiteSettings } from "@/lib/content";
 import { asStringArray } from "@/lib/types";
-import { Reveal } from "@/components/reveal";
-import { GradientMesh } from "@/components/decorative";
+import { LEGAL_IMAGES } from "@/lib/legal-images";
+import { PageHero } from "@/components/page-hero";
+import { PartnerSeal } from "@/components/partner-seal";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Partners",
 };
 
+const HEADING_FONT = "var(--mantine-heading-font-family)";
+
+function telHref(phone: string) {
+  return `tel:${phone.replace(/[^+\d]/g, "")}`;
+}
+
 export default async function PartnersPage() {
-  const partners = await getPartners();
+  const [partners, settings] = await Promise.all([getPartners(), getSiteSettings()]);
 
   return (
     <>
-      <Box
-        component="section"
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          background: "linear-gradient(160deg, var(--mantine-color-ink-9) 0%, var(--mantine-color-brand-9) 60%, var(--mantine-color-ink-8) 100%)",
-        }}
-        pt={{ base: 130, md: 160 }}
-        pb={{ base: 70, md: 90 }}
-      >
-        <GradientMesh variant="hero" />
-        <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
-          <Reveal>
-            <Badge variant="light" color="gold" size="lg" radius="sm" mb="md" styles={{ root: { textTransform: "none" } }}>
-              Leadership
-            </Badge>
-            <Title order={1} c="white" fz={{ base: 32, md: 48 }} ff="var(--mantine-heading-font-family)" maw={780} lh={1.15}>
-              Leadership Built on Legal Excellence, Commercial Insight, and Global Perspective
-            </Title>
-            <Text c="gray.3" fz="md" maw={640} mt="md" lh={1.7}>
-              Parah, Chen and King Attorneys is led by partners whose combined experience spans commercial
-              law, regulatory advisory, corporate leadership, international development, finance, and
-              cross-border engagement.
-            </Text>
-          </Reveal>
-        </div>
-      </Box>
+      <PageHero
+        title="Leadership Built on Legal Excellence, Commercial Insight, and Global Perspective"
+        intro={`${settings.firmName} is led by partners whose combined experience spans commercial law, regulatory advisory, corporate leadership, international development, finance, and cross-border engagement.`}
+        image={LEGAL_IMAGES.oldBaileyHall}
+      />
 
-      <Box py={{ base: 56, md: 88 }}>
-        <div className="section-container">
-          <Stack gap={72}>
-            {partners.map((partner, i) => {
-              const bioParas = partner.bio.split("\n\n");
-              const focus = asStringArray(partner.practiceFocus);
-              const reversed = i % 2 === 1;
-              return (
-                <Reveal key={partner.id} delay={i * 0.06}>
-                  <Grid gap={40}>
-                    <GridCol span={{ base: 12, md: 4 }} order={{ base: 1, md: reversed ? 2 : 1 }}>
-                      <Box
-                        style={{
-                          position: "relative",
-                          aspectRatio: "4 / 5",
-                          borderRadius: "var(--mantine-radius-md)",
-                          overflow: "hidden",
-                          background: partner.photoUrl
-                            ? undefined
-                            : "linear-gradient(150deg, var(--mantine-color-brand-7), var(--mantine-color-ink-9))",
-                          display: partner.photoUrl ? "block" : "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {partner.photoUrl ? (
-                          <Image src={partner.photoUrl} alt={partner.name} fill style={{ objectFit: "cover" }} />
-                        ) : (
-                          <Text c="white" fz={48} fw={700} ff="var(--mantine-heading-font-family)">
-                            {partner.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .slice(0, 2)
-                              .join("")}
-                          </Text>
-                        )}
-                      </Box>
-                    </GridCol>
-                    <GridCol span={{ base: 12, md: 8 }} order={{ base: 2, md: reversed ? 1 : 2 }}>
-                      <Text tt="uppercase" fw={600} size="sm" c="brand.7">
-                        {partner.title}
+      <div className="section-container">
+        {partners.map((partner) => {
+          const [bioLead, ...bioRest] = partner.bio.split("\n\n").filter(Boolean);
+          const focus = asStringArray(partner.practiceFocus);
+          const fullName = partner.credentials ? `${partner.name}, ${partner.credentials}` : partner.name;
+
+          return (
+            <article key={partner.id} className="partner" aria-labelledby={`partner-${partner.id}`}>
+              <div className="partner-grid">
+                <header className="partner-head">
+                  <Text c="gold.8" fw={600} mb={6}>
+                    {partner.title}
+                  </Text>
+                  <Title
+                    id={`partner-${partner.id}`}
+                    order={2}
+                    fz={{ base: 32, md: 44 }}
+                    ff={HEADING_FONT}
+                    c="brand.9"
+                    lh={1.12}
+                  >
+                    {fullName}
+                  </Title>
+                </header>
+
+                <div className="partner-aside">
+                  <div className="partner-portrait">
+                    {partner.photoUrl ? (
+                      <Image
+                        src={partner.photoUrl}
+                        alt={partner.name}
+                        fill
+                        sizes="(min-width: 62em) 30vw, 100vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                    ) : (
+                      <PartnerSeal name={partner.name} firmName={settings.firmName} city={settings.city} />
+                    )}
+                  </div>
+
+                  {(partner.email || partner.phone) && (
+                    <dl className="partner-contact">
+                      {partner.email && (
+                        <div>
+                          <dt>Email</dt>
+                          <dd>
+                            <Anchor href={`mailto:${partner.email}`} c="brand.9" fw={500}>
+                              {partner.email}
+                            </Anchor>
+                          </dd>
+                        </div>
+                      )}
+                      {partner.phone && (
+                        <div>
+                          <dt>Phone</dt>
+                          <dd>
+                            <Anchor href={telHref(partner.phone)} c="brand.9" fw={500}>
+                              {partner.phone}
+                            </Anchor>
+                          </dd>
+                        </div>
+                      )}
+                    </dl>
+                  )}
+                </div>
+
+                <div className="partner-body">
+                  {partner.quote && (
+                    <blockquote className="partner-quote">
+                      <Text fz={{ base: 20, md: 24 }} ff={HEADING_FONT} fs="italic" c="brand.9" lh={1.45}>
+                        {partner.quote}
                       </Text>
-                      <Title order={2} fz={{ base: 24, md: 30 }} ff="var(--mantine-heading-font-family)" c="ink.9" mt={4} mb="md">
-                        {partner.name}, {partner.credentials}
+                    </blockquote>
+                  )}
+
+                  <Stack gap="md" maw={680}>
+                    {bioLead && (
+                      <Text fz={{ base: 18, md: 19 }} c="dark.7" lh={1.65}>
+                        {bioLead}
+                      </Text>
+                    )}
+                    {bioRest.map((para, i) => (
+                      <Text key={i} c="dark.5" fz="md" lh={1.75}>
+                        {para}
+                      </Text>
+                    ))}
+                  </Stack>
+
+                  {focus.length > 0 && (
+                    <div className="partner-focus">
+                      <Title order={3} fz={22} ff={HEADING_FONT} c="brand.9" mb="md">
+                        Practice focus
                       </Title>
-
-                      {(partner.email || partner.phone) && (
-                        <Group gap="lg" mb="lg">
-                          {partner.email && (
-                            <Anchor href={`mailto:${partner.email}`} size="sm" fw={500} c="brand.7">
-                              <Group gap={6} wrap="nowrap">
-                                <IconMail size={16} stroke={1.5} aria-hidden />
-                                {partner.email}
-                              </Group>
-                            </Anchor>
-                          )}
-                          {partner.phone && (
-                            <Anchor href={`tel:${partner.phone.replace(/[^+\d]/g, "")}`} size="sm" fw={500} c="brand.7">
-                              <Group gap={6} wrap="nowrap">
-                                <IconPhone size={16} stroke={1.5} aria-hidden />
-                                {partner.phone}
-                              </Group>
-                            </Anchor>
-                          )}
-                        </Group>
-                      )}
-
-                      {partner.quote && (
-                        <Box
-                          pl="md"
-                          mb="lg"
-                          style={{ borderLeft: "3px solid var(--mantine-color-gold-5)" }}
-                        >
-                          <Group gap={8} align="flex-start" wrap="nowrap">
-                            <IconQuote size={20} color="var(--mantine-color-gold-6)" style={{ flexShrink: 0, marginTop: 2 }} />
-                            <Text fz="lg" fs="italic" c="ink.8" lh={1.5}>
-                              {partner.quote}
-                            </Text>
-                          </Group>
-                        </Box>
-                      )}
-
-                      <Stack gap="sm" mb="lg">
-                        {bioParas.map((para, pi) => (
-                          <Text key={pi} c="dark.4" size="sm" lh={1.75}>
-                            {para}
-                          </Text>
+                      <ul>
+                        {focus.map((f) => (
+                          <li key={f}>{f}</li>
                         ))}
-                      </Stack>
-
-                      {focus.length > 0 && (
-                        <>
-                          <Divider mb="sm" />
-                          <Text fw={600} size="sm" c="ink.9" mb={8}>
-                            Practice Focus
-                          </Text>
-                          <Group gap={8}>
-                            {focus.map((f) => (
-                              <Badge key={f} variant="light" color="brand" radius="sm" styles={{ root: { textTransform: "none" } }}>
-                                {f}
-                              </Badge>
-                            ))}
-                          </Group>
-                        </>
-                      )}
-                    </GridCol>
-                  </Grid>
-                </Reveal>
-              );
-            })}
-          </Stack>
-        </div>
-      </Box>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </>
   );
 }

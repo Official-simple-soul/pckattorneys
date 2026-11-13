@@ -31,4 +31,12 @@ export const LEGAL_IMAGES = {
     caption: "Court No. 1, Central Criminal Court (the Old Bailey), London.",
     source: "https://commons.wikimedia.org/w/index.php?curid=175179943",
   },
+  oldBaileyHall: {
+    src: "/images/legal/old-bailey-grand-hall.webp",
+    width: 1400,
+    height: 1120,
+    alt: "Marble hall with a domed ceiling, a statue on a plinth and an inscription about the scales of justice",
+    caption: "The Grand Hall, Central Criminal Court (the Old Bailey), London.",
+    source: "https://commons.wikimedia.org/wiki/File:Central_Criminal_Court_of_England_and_Wales_(The_Old_Bailey)_The_Grand_Hall.jpg",
+  },
 } as const;
