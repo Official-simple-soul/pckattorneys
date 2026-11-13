@@ -1,78 +1,72 @@
-import {
-  Playfair_Display,
-  Merriweather,
-  Libre_Baskerville,
-  Libre_Caslon_Text,
-  Sora,
-  Inter,
-  Work_Sans,
-  Source_Sans_3,
-  Lora,
-} from "next/font/google";
+import localFont from "next/font/local";
+
+// Fonts are self-hosted from lib/font-files (Latin subset, downloaded from Google Fonts; all
+// SIL Open Font License). The build server could not reliably download them from Google at
+// build time, so nothing here touches the network. Variable fonts cover their whole weight
+// range with one file.
 
 // Heading font candidates
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+const playfair = localFont({
+  src: [{ path: "./font-files/playfair-display-latin.woff2", weight: "500 800", style: "normal" }],
   variable: "--font-playfair",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const merriweather = Merriweather({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
+const merriweather = localFont({
+  src: [{ path: "./font-files/merriweather-latin.woff2", weight: "400 900", style: "normal" }],
   variable: "--font-merriweather",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const libreBaskerville = Libre_Baskerville({
-  subsets: ["latin"],
-  weight: ["400", "700"],
+const libreBaskerville = localFont({
+  src: [{ path: "./font-files/libre-baskerville-latin.woff2", weight: "400 700", style: "normal" }],
   variable: "--font-libre-baskerville",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const libreCaslon = Libre_Caslon_Text({
-  subsets: ["latin"],
-  weight: ["400", "700"],
+const libreCaslon = localFont({
+  src: [
+    { path: "./font-files/libre-caslon-text-400.woff2", weight: "400", style: "normal" },
+    { path: "./font-files/libre-caslon-text-700.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-libre-caslon",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const sora = Sora({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+const sora = localFont({
+  src: [{ path: "./font-files/sora-latin.woff2", weight: "500 800", style: "normal" }],
   variable: "--font-sora",
   display: "swap",
 });
 
 // Body font candidates
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const inter = localFont({
+  src: [{ path: "./font-files/inter-latin.woff2", weight: "400 700", style: "normal" }],
   variable: "--font-inter",
   display: "swap",
 });
 
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const workSans = localFont({
+  src: [{ path: "./font-files/work-sans-latin.woff2", weight: "400 600", style: "normal" }],
   variable: "--font-work-sans",
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const sourceSans = localFont({
+  src: [{ path: "./font-files/source-sans-3-latin.woff2", weight: "400 600", style: "normal" }],
   variable: "--font-source-sans",
   display: "swap",
 });
 
-const lora = Lora({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const lora = localFont({
+  src: [{ path: "./font-files/lora-latin.woff2", weight: "400 600", style: "normal" }],
   variable: "--font-lora",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 export const HEADING_FONTS = {
