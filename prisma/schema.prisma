@@ -30,8 +30,8 @@ model SiteSettings {
   accentColor     String   @default("#13315C")
   neutralColor    String   @default("#F7F5F0")
   radius          String   @default("md")
-  headingFont     String   @default("playfair")
-  bodyFont        String   @default("inter")
+  headingFont     String   @default("libreCaslon")
+  bodyFont        String   @default("sourceSans")
   phone           String   @default("+234 800 000 0000")
   email           String   @default("consult@pckattorneys.com")
   address         String   @default("Plot 123, Central Business District")
@@ -130,6 +130,8 @@ model Partner {
   credentials    String   @default("Esq.")
   title          String
   photoUrl       String   @default("")
+  email          String   @default("")
+  phone          String   @default("")
   bio            String   @db.Text
   quote          String   @db.Text
   practiceFocus  Json

@@ -17,6 +17,8 @@ export default function NewPartnerPage() {
           credentials: "Esq.",
           title: "",
           photoUrl: "",
+          email: "",
+          phone: "",
           quote: "",
           bio: "",
           practiceFocus: [],

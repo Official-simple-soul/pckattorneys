@@ -159,6 +159,8 @@ const partnerSchema = z.object({
   credentials: z.string(),
   title: z.string().min(1),
   photoUrl: z.string().optional().default(""),
+  email: z.union([z.literal(""), z.email("Enter a valid email address.")]).optional().default(""),
+  phone: z.string().trim().optional().default(""),
   quote: z.string().optional().default(""),
   bio: z.string(),
   practiceFocus: z.array(z.string()),
