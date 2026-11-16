@@ -57,3 +57,43 @@ export const LEGAL_IMAGES = {
       "https://commons.wikimedia.org/wiki/File:William_Blackstone,_Commentaries_on_the_Laws_of_England_(1st_ed,_1765,_vol_I,_title_page).jpg",
   },
 } as const;
+
+// Energy and infrastructure photographs, also CC0 or public domain.
+export const ENERGY_IMAGES = {
+  offshorePlatform: {
+    src: "/images/energy/offshore-platform.webp",
+    width: 1600,
+    height: 1200,
+    alt: "Offshore oil and gas platform lit up at dusk, with a gas flare",
+    source: "https://commons.wikimedia.org/wiki/File:Holstein_at_Dusk.jpg",
+  },
+  refinerySkyline: {
+    src: "/images/energy/refinery-skyline.webp",
+    width: 1600,
+    height: 1067,
+    alt: "Refinery towers on the horizon across dark water under a stormy sky",
+    source: "https://commons.wikimedia.org/wiki/File:Refinery_near_New_Orleans,_United_States_(Unsplash_J-LMPtk8tmg).jpg",
+  },
+  powerTransmission: {
+    src: "/images/energy/power-transmission.webp",
+    width: 1600,
+    height: 1200,
+    alt: "High-voltage transmission towers and power lines against a blue sky",
+    source: "https://commons.wikimedia.org/wiki/File:Anchor_pylon_of_high-voltage_overhead_power_line_750_kV.jpg",
+  },
+  highSpeedTrain: {
+    src: "/images/energy/high-speed-train.webp",
+    width: 1600,
+    height: 1070,
+    alt: "High-speed passenger train standing at a station platform",
+    source: "https://commons.wikimedia.org/wiki/File:A_platform_on_Bamberg_station_and_a_high-speed_train.jpg",
+  },
+  openPitMine: {
+    src: "/images/energy/open-pit-mine.webp",
+    width: 1600,
+    height: 1080,
+    alt: "Aerial view of the terraced benches of a large open-pit mine",
+    source:
+      "https://commons.wikimedia.org/wiki/File:KENNECOTT_MINE_IS_THE_LARGEST_OPEN-PIT_COPPER_OPERATION_IN_THE_WORLD_-_NARA_-_544789.jpg",
+  },
+} as const;

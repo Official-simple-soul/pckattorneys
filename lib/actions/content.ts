@@ -4,6 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getSession } from "@/lib/auth";
 
 type ActionResult = { success: boolean; error?: string };
 
@@ -198,4 +199,57 @@ export async function markSubmissionRead(id: string, read: boolean) {
 export async function deleteSubmission(id: string) {
   await prisma.contactSubmission.delete({ where: { id } });
   revalidatePath("/admin/messages");
+}
+
+// --- Homepage hero slides ---
+
+async function requireAdmin() {
+  if (!(await getSession())) throw new Error("Not signed in.");
+}
+
+// Internal paths ("/contact", "/practice-areas/x#y"), in-page anchors, or full web/mail/phone links.
+const linkHref = z
+  .string()
+  .trim()
+  .refine((v) => v === "" || /^(\/|#|https?:\/\/|mailto:|tel:)/.test(v), {
+    message: "Start with / for a page on this site, or https:// for another website.",
+  });
+
+const heroSlideSchema = z
+  .object({
+    label: z.string().trim().min(1, "Give the slide a short label."),
+    eyebrow: z.string().trim().default(""),
+    headline: z.string().trim().min(1, "Add a headline."),
+    body: z.string().trim().min(1, "Add a short description."),
+    imageUrl: z.string().trim().default(""),
+    imageAlt: z.string().trim().default(""),
+    ctaLabel: z.string().trim().default(""),
+    ctaHref: linkHref.default(""),
+    order: z.coerce.number().int().min(0).default(0),
+    published: z.boolean().default(true),
+  })
+  .refine((v) => !v.ctaLabel || v.ctaHref, { message: "Add a link for the button.", path: ["ctaHref"] });
+
+export async function createHeroSlide(values: unknown): Promise<ActionResult> {
+  await requireAdmin();
+  const parsed = heroSlideSchema.safeParse(values);
+  if (!parsed.success) return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid data" };
+  await prisma.heroSlide.create({ data: parsed.data });
+  revalidatePath("/");
+  redirect("/admin/hero-slides");
+}
+
+export async function updateHeroSlide(id: string, values: unknown): Promise<ActionResult> {
+  await requireAdmin();
+  const parsed = heroSlideSchema.safeParse(values);
+  if (!parsed.success) return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid data" };
+  await prisma.heroSlide.update({ where: { id }, data: parsed.data });
+  revalidatePath("/");
+  return { success: true };
+}
+
+export async function deleteHeroSlide(id: string) {
+  await requireAdmin();
+  await prisma.heroSlide.delete({ where: { id } });
+  revalidatePath("/");
 }

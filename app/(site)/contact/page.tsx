@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 
 const HEADING_FONT = "var(--mantine-heading-font-family)";
 
+const ENQUIRY_CONTACTS = [{ name: "Sherif-deen Abdur-roheem", email: "sherif.roheem@pckattorneys.com" }];
+
 function telHref(phone: string) {
   return `tel:${phone.replace(/[^+\d]/g, "")}`;
 }
@@ -125,6 +127,29 @@ export default async function ContactPage() {
                     </div>
                   </div>
                 )}
+
+                <div>
+                  <Title order={2} fz={{ base: 26, md: 30 }} ff={HEADING_FONT} c="brand.9" mb="lg">
+                    Enquiries &amp; coordination
+                  </Title>
+                  <div className="ruled-list ruled-list-tight">
+                    {ENQUIRY_CONTACTS.map((person) => (
+                      <div key={person.email}>
+                        <Text fz={20} ff={HEADING_FONT} c="brand.9" lh={1.3} mb={8}>
+                          {person.name}
+                        </Text>
+                        <Anchor
+                          href={`mailto:${person.email}`}
+                          c="brand.9"
+                          fw={500}
+                          style={{ overflowWrap: "anywhere" }}
+                        >
+                          {person.email}
+                        </Anchor>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </Stack>
             </GridCol>
           </Grid>

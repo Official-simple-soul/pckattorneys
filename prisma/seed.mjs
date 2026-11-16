@@ -6,6 +6,132 @@ const prisma = new PrismaClient();
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "abdurroheemsherifdeen@gmail.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "PckLLP-Admin-2026!";
 
+const ENERGY_AREA = {
+  shortTitle: "Energy & Infrastructure",
+  title: "Energy, Infrastructure & Natural Resources",
+  tagline:
+    "Legal, regulatory and investment counsel for gas, oil, power, high-speed rail and mining projects in Nigeria.",
+  ctaLabel: "Discuss an energy or infrastructure project",
+};
+
+const HERO_SLIDES = [
+  {
+    order: 1,
+    label: "Energy",
+    eyebrow: "Energy & Infrastructure",
+    headline: "Counsel for Nigeria's gas, oil and power projects",
+    body: "From CNG, LPG and LNG to gas-to-power, modular refineries and jetties, we structure, document and protect energy investments from first assessment to operation.",
+    imageUrl: "/images/energy/offshore-platform.webp",
+    imageAlt: "Offshore oil and gas platform lit up at dusk",
+    ctaLabel: "Explore our energy practice",
+    ctaHref: "/practice-areas/energy-natural-resources",
+  },
+  {
+    order: 2,
+    label: "High-speed rail",
+    eyebrow: "Railway Infrastructure",
+    headline: "Partners and financiers for a 4,000 km high-speed rail programme",
+    body: "Acting for the project promoters, we are engaging strategic partners and financiers for a proposed high-speed railway connecting Lagos, Abuja, Kano and Port Harcourt.",
+    imageUrl: "/images/energy/high-speed-train.webp",
+    imageAlt: "High-speed passenger train at a station platform",
+    ctaLabel: "See the rail opportunity",
+    ctaHref: "/practice-areas/energy-natural-resources#rail",
+  },
+  {
+    order: 3,
+    label: "Mining",
+    eyebrow: "Mining & Solid Minerals",
+    headline: "Securing title and value in Nigeria's solid minerals",
+    body: "Mineral title due diligence, joint ventures, financing, offtake and host-community agreements for investors across more than 44 commercially viable minerals.",
+    imageUrl: "/images/energy/open-pit-mine.webp",
+    imageAlt: "Aerial view of a terraced open-pit mine",
+    ctaLabel: "Our mining practice",
+    ctaHref: "/practice-areas/energy-natural-resources#mining",
+  },
+];
+
+// The two combined practice pages hold several of the proposal's 19 practice areas, one section each.
+// Section titles double as link targets (e.g. #tax-advisory) from the Practice Areas overview.
+const COMBINED_AREA_SECTIONS = {
+  "regulatory-tax-esg": [
+    {
+      title: "Regulatory Compliance & Corporate Governance",
+      body: "Clear governance and dependable compliance keep a business licensed, financeable and ready for investors.",
+      points: [
+        "Regulatory advisory",
+        "Licensing and permits",
+        "Compliance audits",
+        "Governance frameworks",
+        "Corporate secretarial support",
+        "Statutory filings",
+        "Ongoing compliance management",
+      ],
+    },
+    {
+      title: "Tax Advisory",
+      body: "Transaction structuring, tax compliance and fiscal advisory, including under the Nigeria Tax Act, 2025, in force since 1 January 2026.",
+      points: [
+        "Tax-efficient transaction structuring",
+        "Tax compliance",
+        "Fiscal advisory",
+        "Tax implications of mergers and acquisitions",
+        "Tax on investments and financing arrangements",
+        "Corporate reorganisations",
+      ],
+    },
+    {
+      title: "Environmental Law & ESG",
+      body: "Environmental and social obligations increasingly decide whether a project is approved, financed and accepted by its host community.",
+      points: [
+        "Environmental compliance",
+        "Environmental impact assessments",
+        "Permitting",
+        "Environmental, social and governance frameworks",
+        "Pollution control and waste management",
+        "Rehabilitation obligations",
+        "Climate-related requirements",
+      ],
+    },
+  ],
+  "ip-wealth-insurance": [
+    {
+      title: "Intellectual Property",
+      body: "Protecting the brands, technology and creative work that give a business its value.",
+      points: [
+        "Trademark, copyright and patent protection",
+        "Licensing",
+        "Technology transfer",
+        "Intellectual property portfolio management",
+        "Enforcement",
+      ],
+    },
+    {
+      title: "Wealth & Asset Management",
+      body: "Structuring and protecting private and family wealth across generations.",
+      points: [
+        "Estate planning",
+        "Trusts",
+        "Succession planning",
+        "Wealth preservation",
+        "Private client advisory",
+        "Asset protection strategies",
+      ],
+    },
+    {
+      title: "Insurance",
+      body: "Making sure risk is insured where it should be, and that cover responds when it is needed.",
+      points: [
+        "Insurance regulatory compliance",
+        "Policy advisory",
+        "Claims management",
+        "Contractual risk allocation",
+        "Insurance transactions",
+        "Insurance dispute resolution",
+      ],
+    },
+  ],
+};
+
 async function main() {
   // --- Admin user ---
   const passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 12);
@@ -16,6 +142,11 @@ async function main() {
   });
 
   // --- Site settings ---
+  const OFFICE_ADDRESS = "467 Oka Akoko Street";
+  // David Umem's number stands in as the firm's main line until the office has its own.
+  const OFFICE_PHONE = "+234 808 789 6082";
+  const PLACEHOLDER_PHONE = "+234 (0) 900 000 0000";
+  const PLACEHOLDER_ADDRESSES = ["Plot 1, Central Business District", "Plot 123, Central Business District"];
   await prisma.siteSettings.upsert({
     where: { id: "settings" },
     update: {},
@@ -32,13 +163,22 @@ async function main() {
       neutralColor: "#F7F5F0",
       headingFont: "libreCaslon",
       bodyFont: "sourceSans",
-      phone: "+234 (0) 900 000 0000",
+      phone: OFFICE_PHONE,
       email: "consult@pckattorneys.com",
-      address: "Plot 1, Central Business District",
+      address: OFFICE_ADDRESS,
       city: "Abuja",
       country: "Nigeria",
       officeHours: "Monday – Friday, 9:00am – 5:00pm",
     },
+  });
+  // Replace the old placeholder address on existing databases, but never an address set in admin.
+  await prisma.siteSettings.updateMany({
+    where: { id: "settings", address: { in: PLACEHOLDER_ADDRESSES } },
+    data: { address: OFFICE_ADDRESS },
+  });
+  await prisma.siteSettings.updateMany({
+    where: { id: "settings", phone: PLACEHOLDER_PHONE },
+    data: { phone: OFFICE_PHONE },
   });
 
   // --- Homepage ---
@@ -625,7 +765,7 @@ async function main() {
       matters: [],
       whyTitle: "Why Clients Choose Us",
       whyItems: [],
-      extraSections: [],
+      extraSections: COMBINED_AREA_SECTIONS["regulatory-tax-esg"],
       closingTitle: "Let's Talk About Your Compliance Needs",
       closingBody:
         "Whether you are managing regulatory exposure, structuring a tax-efficient transaction, or building an ESG framework investors can trust, our team is ready to help.",
@@ -645,11 +785,122 @@ async function main() {
       matters: [],
       whyTitle: "Why Clients Choose Us",
       whyItems: [],
-      extraSections: [],
+      extraSections: COMBINED_AREA_SECTIONS["ip-wealth-insurance"],
       closingTitle: "Protect What You've Built",
       closingBody:
         "Whether you are protecting a brand, structuring wealth, or reviewing insurance exposure, our team is ready to help you safeguard what matters most.",
       ctaLabel: "Schedule a confidential consultation with our IP, Wealth & Insurance team.",
+    },
+    {
+      order: 8,
+      slug: "admiralty-maritime-law",
+      shortTitle: "Admiralty & Maritime",
+      title: "Admiralty & Maritime Law",
+      tagline: "Shipping Transactions, Vessel Finance, and Maritime Regulation",
+      intro:
+        "Parah, Chen and King Attorneys advises shipowners, charterers, operators, financiers and investors on shipping transactions, carriage of goods, marine insurance, vessel financing and leasing, tugboat charters, maritime regulatory compliance and disputes.\n\nMuch of our maritime work supports energy and infrastructure projects: the vessels, tugboats and rigs that serve the oil and gas industry, and the jetties and terminals that connect projects to the water.",
+      servicesTitle: "Our Admiralty & Maritime Services",
+      services: [
+        "Shipping transactions",
+        "Carriage of goods by sea",
+        "Marine insurance",
+        "Vessel acquisition, financing and leasing",
+        "Vessel and tugboat charter arrangements",
+        "Rig leasing and drilling services documentation",
+        "Cabotage registration, ownership and crewing requirements",
+        "Jetty and terminal approvals and operating agreements",
+        "Maritime regulatory compliance",
+        "Maritime dispute resolution",
+      ],
+      mattersTitle: "Representative Matters",
+      matters: [],
+      whyTitle: "Why Clients Choose Us",
+      whyItems: [],
+      extraSections: [
+        {
+          title: "Regulators and Approvals",
+          body: "Marine and waterfront projects engage several authorities. NIMASA administers ship registration and cabotage requirements, the Nigerian Ports Authority has procedures for jetties within its jurisdiction, and NIWA provides jetty and terminal approvals on inland waterways. We assess the project's location, vessel operations and facility use before setting the approval route.",
+          points: [],
+        },
+        {
+          title: "Allocating Risk at Sea",
+          body: "Before a vessel is acquired or financed, we review its ownership, mortgages and other encumbrances, condition, insurance, maintenance history and the customer demand behind it. Charterparties, leases and service contracts then set out who is responsible for mobilisation, crew, fuel, repairs, downtime, operational control and pollution.",
+          points: [],
+        },
+      ],
+      closingTitle: "Talk to Us About Your Vessel or Maritime Project",
+      closingBody:
+        "Whether you are acquiring or financing a vessel, chartering tonnage for an energy project, or resolving a dispute at sea or in port, our team is ready to help.",
+      ctaLabel: "Schedule a confidential consultation with our Admiralty & Maritime team.",
+    },
+    {
+      order: 9,
+      slug: "employment-immigration",
+      shortTitle: "Employment & Immigration",
+      title: "Employment & Immigration",
+      tagline: "Workforce, Labour Compliance, and Expatriate Employment in Nigeria",
+      intro:
+        "Parah, Chen and King Attorneys advises employers, executives and investors on employment contracts, labour law compliance, executive employment, workforce restructuring, immigration requirements and expatriate employment.\n\nFor foreign investors and project companies, we build employment and immigration requirements into the investment plan from the start, alongside Nigerian content obligations, so staffing does not hold up mobilisation.",
+      servicesTitle: "Our Employment & Immigration Services",
+      services: [
+        "Employment contracts and workplace policies",
+        "Labour law compliance",
+        "Executive employment and service agreements",
+        "Workforce restructuring",
+        "Immigration requirements for foreign personnel",
+        "Expatriate employment advisory",
+        "Nigerian content training and employment obligations",
+        "Employment issues in acquisitions and joint ventures",
+      ],
+      mattersTitle: "Representative Matters",
+      matters: [],
+      whyTitle: "Why Clients Choose Us",
+      whyItems: [],
+      extraSections: [
+        {
+          title: "Supporting Foreign Investment",
+          body: "When a foreign investor sets up or acquires a Nigerian business, expatriate employment requirements sit alongside company registration, capital importation and the lawful repatriation of proceeds. We coordinate these workstreams so the right people are in place when the project needs them.",
+          points: [],
+        },
+      ],
+      closingTitle: "Build Your Team with Confidence",
+      closingBody:
+        "Whether you are hiring senior executives, bringing in expatriate specialists, restructuring a workforce or reviewing your compliance, our team is ready to help.",
+      ctaLabel: "Schedule a confidential consultation with our Employment & Immigration team.",
+    },
+    {
+      order: 10,
+      slug: "restructuring-insolvency",
+      shortTitle: "Restructuring & Insolvency",
+      title: "Restructuring & Insolvency",
+      tagline: "Reorganisations, Debt Workouts, and Recovery Strategies that Preserve Value",
+      intro:
+        "Parah, Chen and King Attorneys advises companies, creditors, investors and directors on corporate and business reorganisations, distressed asset transactions, creditor negotiations, debt workouts, business recovery arrangements and insolvency-related matters, including representation.\n\nWhere financial distress arises, our aim is to preserve value: stabilising the business, agreeing a workable path with creditors and protecting the position of those we act for.",
+      servicesTitle: "Our Restructuring & Insolvency Services",
+      services: [
+        "Corporate and business reorganisations",
+        "Distressed asset transactions",
+        "Creditor negotiations",
+        "Debt workouts",
+        "Business recovery arrangements",
+        "Insolvency-related advisory and representation",
+        "Debt recovery",
+      ],
+      mattersTitle: "Representative Matters",
+      matters: [],
+      whyTitle: "Why Clients Choose Us",
+      whyItems: [],
+      extraSections: [
+        {
+          title: "One Team Across Disciplines",
+          body: "A restructuring draws on banking, corporate, tax, employment and dispute resolution advice at the same time. Our practice groups work as one team, so financing terms, corporate approvals, tax consequences, workforce changes and any litigation are handled together rather than in sequence.",
+          points: [],
+        },
+      ],
+      closingTitle: "Act Early to Preserve Value",
+      closingBody:
+        "Whether you are a business under pressure, a creditor seeking recovery or an investor looking at distressed assets, early advice keeps more options open. Our team is ready to help.",
+      ctaLabel: "Schedule a confidential consultation with our Restructuring & Insolvency team.",
     },
   ];
 
@@ -659,6 +910,16 @@ async function main() {
     const existing = await prisma.practiceArea.findUnique({ where: { slug: area.slug } });
     if (!existing) {
       await prisma.practiceArea.create({ data: area });
+    }
+  }
+
+  // The combined pages were first seeded with no sections at all. Fill them in only while
+  // they are still empty, so content added in /admin is never replaced.
+  for (const [slug, sections] of Object.entries(COMBINED_AREA_SECTIONS)) {
+    const area = await prisma.practiceArea.findUnique({ where: { slug } });
+    const isEmpty = (value) => Array.isArray(value) && value.length === 0;
+    if (area && isEmpty(area.services) && isEmpty(area.extraSections)) {
+      await prisma.practiceArea.update({ where: { slug }, data: { extraSections: sections } });
     }
   }
 
@@ -690,7 +951,7 @@ async function main() {
       title: "Managing Partner",
       photoUrl: "/images/partners/grace-kalu.webp",
       email: "gracekalu@pckattorneys.com",
-      phone: "+234 806 717 6550",
+      phone: "",
       quote: "",
       bio: "Grace Kalu serves as the Managing Partner of Parah, Chen and King Attorneys, where she leads the firm's operations, strategy, and client engagement with a blend of legal precision, commercial intelligence, and transformative leadership.\n\nHer practice reflects a rare intersection of corporate law, regulatory compliance, intellectual property, technology, and digital strategy, positioning her as a trusted adviser to businesses, founders, investors, and institutions navigating complex legal and commercial environments.\n\nGrace is a First-Class graduate of the Nigerian Law School and holds a Master of Laws (LL.M). She is also pursuing an MBA at the Lagos Business School, further strengthening her ability to integrate sophisticated legal analysis with business strategy, financial decision-making, and organisational leadership.\n\nHer professional reputation has earned significant national and continental recognition. She has been named among the Top 15 Under 40 Lawyers in Nigeria, recognised as one of the 50 Leading Female Lawyers in Nigeria, and honoured as one of the 25 Africans Changing the Face of Education and Creating Sustainable Impact in Africa (2023).\n\nThese recognitions reflect not only her legal accomplishments, but also her broader influence in innovation, leadership, education, and sustainable development.\n\nAt Parah, Chen and King Attorneys, Grace channels this award-winning drive into advancing the firm's mission of delivering exceptional legal services while fostering innovation, equity, institutional excellence, and long-term impact for clients and communities alike.\n\nShe is particularly known for bringing a commercially strategic lens to legal advisory, helping clients translate regulatory complexity into practical business opportunities and actionable growth strategies.",
       practiceFocus: [
@@ -723,6 +984,30 @@ async function main() {
       await prisma.partner.update({ where: { id: existing.id }, data: backfill });
     }
   }
+
+  // Energy leads the practice list and its page covers gas, oil & gas, power, rail and mining.
+  // Only applied while the entry still has its original seeded values.
+  await prisma.practiceArea.updateMany({
+    where: { slug: "energy-natural-resources", shortTitle: "Energy & Natural Resources" },
+    data: {
+      order: 0,
+      shortTitle: ENERGY_AREA.shortTitle,
+      title: ENERGY_AREA.title,
+      tagline: ENERGY_AREA.tagline,
+      ctaLabel: ENERGY_AREA.ctaLabel,
+    },
+  });
+
+  // --- Homepage hero carousel (only when no slides exist yet) ---
+  if ((await prisma.heroSlide.count()) === 0) {
+    await prisma.heroSlide.createMany({ data: HERO_SLIDES });
+  }
+
+  // Grace Kalu's number was published at first and then withdrawn at the firm's request.
+  await prisma.partner.updateMany({
+    where: { name: "Grace Kalu", phone: "+234 806 717 6550" },
+    data: { phone: "" },
+  });
 
   console.log("Seed complete.");
   console.log(`Admin login -> email: ${ADMIN_EMAIL}  password: ${ADMIN_PASSWORD}`);
