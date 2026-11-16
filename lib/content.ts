@@ -34,3 +34,18 @@ export const getPracticeAreaBySlug = cache(async (slug: string) => {
 export const getPartners = cache(async () => {
   return prisma.partner.findMany({ orderBy: { order: "asc" } });
 });
+
+// The extra hero slides are optional, so a failure here (e.g. the table not created yet
+// because `db:setup` hasn't run) shows the firm slide alone rather than breaking Home.
+export const getHeroSlides = cache(async () => {
+  try {
+    return await prisma.heroSlide.findMany({ where: { published: true }, orderBy: { order: "asc" } });
+  } catch (error) {
+    console.error("Could not load hero slides; showing the main slide only.", error);
+    return [];
+  }
+});
+
+export const getAllHeroSlides = cache(async () => {
+  return prisma.heroSlide.findMany({ orderBy: { order: "asc" } });
+});

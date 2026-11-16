@@ -1,19 +1,22 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import {
   Box,
   Grid,
   GridCol,
-  Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from '@mantine/core';
-import { IconChevronRight } from '@tabler/icons-react';
-import { getHomePage, getPracticeAreas, getSiteSettings } from '@/lib/content';
+import {
+  getHeroSlides,
+  getHomePage,
+  getPracticeAreas,
+  getSiteSettings,
+} from '@/lib/content';
+import { HeroCarousel, type HeroSlideView } from '@/components/hero-carousel';
 import { asStringArray, asTitleBodyArray } from '@/lib/types';
-import { getPracticeIcon } from '@/lib/practice-icons';
+import { PracticeIndex } from '@/components/practice-index';
 import { LEGAL_IMAGES } from '@/lib/legal-images';
 import { ScalesArt } from '@/components/legal-art';
 import { ClosingCta } from '@/components/closing-cta';
@@ -22,10 +25,11 @@ import { LinkButton } from '@/components/ui/link-button';
 const HEADING_FONT = 'var(--mantine-heading-font-family)';
 
 export default async function HomePage() {
-  const [home, settings, practiceAreas] = await Promise.all([
+  const [home, settings, practiceAreas, extraSlides] = await Promise.all([
     getHomePage(),
     getSiteSettings(),
     getPracticeAreas(),
+    getHeroSlides(),
   ]);
 
   const trustBarItems = asStringArray(home.trustBarItems);
@@ -33,88 +37,49 @@ export default async function HomePage() {
   const whyChooseUsItems = asTitleBodyArray(home.whyChooseUsItems);
   const { justiceStatue, lawBooks, magnaCarta, oldBaileyCourt } = LEGAL_IMAGES;
 
+  const statue = {
+    src: justiceStatue.src,
+    alt: justiceStatue.alt,
+    kind: 'cutout' as const,
+    width: justiceStatue.width,
+    height: justiceStatue.height,
+  };
+  const heroSlides: HeroSlideView[] = [
+    {
+      key: 'firm',
+      label: 'The firm',
+      eyebrow: home.heroEyebrow,
+      headline: home.heroHeadline,
+      body: home.heroSubheadline,
+      image: home.heroImage
+        ? { src: home.heroImage, alt: settings.firmName, kind: 'photo' }
+        : statue,
+      actions: [
+        { label: home.heroPrimaryCta, href: '/contact' },
+        { label: home.heroSecondaryCta, href: '/partners', secondary: true },
+      ],
+    },
+    ...extraSlides.map((slide) => ({
+      key: slide.id,
+      label: slide.label,
+      eyebrow: slide.eyebrow,
+      headline: slide.headline,
+      body: slide.body,
+      image: slide.imageUrl
+        ? { src: slide.imageUrl, alt: slide.imageAlt, kind: 'photo' as const }
+        : statue,
+      actions:
+        slide.ctaLabel && slide.ctaHref
+          ? [{ label: slide.ctaLabel, href: slide.ctaHref }]
+          : [],
+    })),
+  ];
+
   return (
     <>
       {/* HERO */}
       <section className="home-hero">
-        <div className="home-hero-stage">
-          <Stack gap="lg" className="home-hero-text">
-            <Text className="home-hero-seq" c="gold.4" fw={500} size="sm">
-              {home.heroEyebrow}
-            </Text>
-            <Title
-              order={1}
-              className="home-hero-seq"
-              style={
-                {
-                  '--seq': '80ms',
-                  letterSpacing: '-0.01em',
-                } as React.CSSProperties
-              }
-              c="white"
-              lh={1.12}
-              fz={{ base: 36, sm: 46, lg: 54 }}
-              ff={HEADING_FONT}
-            >
-              {home.heroHeadline}
-            </Title>
-            <Text
-              className="home-hero-seq"
-              style={{ '--seq': '160ms' } as React.CSSProperties}
-              c="gray.3"
-              fz={{ base: 'md', md: 'lg' }}
-              lh={1.6}
-            >
-              {home.heroSubheadline}
-            </Text>
-            <Group
-              className="home-hero-seq"
-              style={{ '--seq': '240ms' } as React.CSSProperties}
-              gap="md"
-              mt="xs"
-            >
-              <LinkButton href="/contact" size="md" color="gold.5" c="brand.9">
-                {home.heroPrimaryCta}
-              </LinkButton>
-              <LinkButton
-                href="/partners"
-                size="md"
-                variant="outline"
-                color="gray.3"
-                c="white"
-              >
-                {home.heroSecondaryCta}
-              </LinkButton>
-            </Group>
-          </Stack>
-
-          <div
-            className="home-hero-figure home-hero-seq"
-            style={{ '--seq': '120ms' } as React.CSSProperties}
-          >
-            {home.heroImage ? (
-              <div className="home-hero-photo">
-                <Image
-                  src={home.heroImage}
-                  alt={settings.firmName}
-                  fill
-                  priority
-                  sizes="(min-width: 62em) 54vw, 100vw"
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-            ) : (
-              <Image
-                src={justiceStatue.src}
-                alt={justiceStatue.alt}
-                width={justiceStatue.width}
-                height={justiceStatue.height}
-                priority
-                sizes="(min-width: 62em) 54vw, 100vw"
-              />
-            )}
-          </div>
-        </div>
+        <HeroCarousel slides={heroSlides} />
 
         <div className="home-trust-bar">
           <div className="section-container">
@@ -216,50 +181,7 @@ export default async function HomePage() {
               </div>
             </GridCol>
             <GridCol span={{ base: 12, md: 8 }}>
-              <nav aria-label="Practice areas" className="practice-list">
-                {practiceAreas.map((area) => {
-                  const Icon = getPracticeIcon(area.slug);
-                  return (
-                    <Link
-                      key={area.id}
-                      href={`/practice-areas/${area.slug}`}
-                      className="practice-row"
-                    >
-                      <span className="practice-row-ring">
-                        <Icon size={20} stroke={1.5} aria-hidden />
-                      </span>
-                      <span>
-                        <Text
-                          component="span"
-                          display="block"
-                          className="practice-row-title"
-                          fz={{ base: 20, md: 24 }}
-                          ff={HEADING_FONT}
-                          c="brand.9"
-                          lh={1.3}
-                          mb={6}
-                        >
-                          {area.shortTitle}
-                        </Text>
-                        <Text
-                          component="span"
-                          display="block"
-                          c="dark.5"
-                          lh={1.55}
-                        >
-                          {area.tagline}
-                        </Text>
-                      </span>
-                      <IconChevronRight
-                        className="practice-row-go"
-                        size={20}
-                        stroke={1.5}
-                        aria-hidden
-                      />
-                    </Link>
-                  );
-                })}
-              </nav>
+              <PracticeIndex areas={practiceAreas} />
             </GridCol>
           </Grid>
         </div>

@@ -34,7 +34,7 @@ model SiteSettings {
   bodyFont        String   @default("sourceSans")
   phone           String   @default("+234 800 000 0000")
   email           String   @default("consult@pckattorneys.com")
-  address         String   @default("Plot 123, Central Business District")
+  address         String   @default("467 Oka Akoko Street")
   city            String   @default("Abuja")
   country         String   @default("Nigeria")
   linkedinUrl     String   @default("")
@@ -121,6 +121,24 @@ model PracticeArea {
   heroImage      String   @default("")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
+
+/// Extra slides for the homepage hero carousel. The first slide always comes from
+/// HomePage (heroHeadline etc.); these follow it in `order`.
+model HeroSlide {
+  id        String   @id @default(cuid())
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  label     String
+  eyebrow   String   @default("")
+  headline  String
+  body      String   @db.Text
+  imageUrl  String   @default("")
+  imageAlt  String   @default("")
+  ctaLabel  String   @default("")
+  ctaHref   String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Partner {
