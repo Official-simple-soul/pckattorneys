@@ -1,6 +1,7 @@
 import { Anchor, Grid, GridCol, Group, Stack, Text, Title } from "@mantine/core";
 import { IconLock } from "@tabler/icons-react";
 import { getContactPage, getPartners, getPracticeAreas, getSiteSettings } from "@/lib/content";
+import { OFFICES } from "@/lib/offices";
 import { PageHero } from "@/components/page-hero";
 import { ScalesArt } from "@/components/legal-art";
 import { ContactForm } from "@/components/contact-form";
@@ -60,14 +61,21 @@ export default async function ContactPage() {
                     Contact the firm
                   </Title>
                   <dl className="detail-list">
-                    <div>
-                      <dt>Office</dt>
-                      <dd>
-                        {settings.address}
-                        <br />
-                        {settings.city}, {settings.country}
-                      </dd>
-                    </div>
+                    {OFFICES.map((office) => (
+                      <div key={office.name}>
+                        <dt>
+                          {office.name}
+                          {office.note && ` (${office.note.toLowerCase()})`}
+                        </dt>
+                        <dd>
+                          {office.lines.map((line) => (
+                            <span key={line} style={{ display: "block" }}>
+                              {line}
+                            </span>
+                          ))}
+                        </dd>
+                      </div>
+                    ))}
                     <div>
                       <dt>Phone</dt>
                       <dd>

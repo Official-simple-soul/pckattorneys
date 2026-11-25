@@ -1,5 +1,6 @@
 import { Anchor, Box, Divider, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { getSiteSettings, getPracticeAreas } from "@/lib/content";
+import { OFFICES } from "@/lib/offices";
 import { LinkText } from "@/components/ui/link-text";
 
 export async function SiteFooter() {
@@ -56,11 +57,6 @@ export async function SiteFooter() {
             <Text fw={600} size="sm" c="white" mb={4}>
               Contact
             </Text>
-            <Text size="sm" c="gray.4">
-              {settings.address}
-              <br />
-              {settings.city}, {settings.country}
-            </Text>
             <Anchor href={`tel:${settings.phone.replace(/[^+\d]/g, "")}`} size="sm" c="gray.4">
               {settings.phone}
             </Anchor>
@@ -71,6 +67,28 @@ export async function SiteFooter() {
               {settings.officeHours}
             </Text>
           </Stack>
+        </SimpleGrid>
+
+        <Divider my={40} color="var(--pck-rule-on-navy)" />
+
+        <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={40}>
+          {OFFICES.map((office) => (
+            <div key={office.name}>
+              <Text fw={600} size="sm" c="white" mb={4}>
+                {office.name}
+                {office.note && (
+                  <Text span inherit fw={400} c="gold.4">
+                    {` (${office.note.toLowerCase()})`}
+                  </Text>
+                )}
+              </Text>
+              {office.lines.map((line) => (
+                <Text key={line} size="sm" c="gray.4">
+                  {line}
+                </Text>
+              ))}
+            </div>
+          ))}
         </SimpleGrid>
 
         <Divider my={40} color="var(--pck-rule-on-navy)" />
