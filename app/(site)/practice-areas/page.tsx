@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Box, Grid, GridCol, Stack, Text, Title } from "@mantine/core";
-import { getPracticeAreas } from "@/lib/content";
+import { PRACTICE_AREAS } from "@/content/practice-areas";
 import { LEGAL_IMAGES } from "@/lib/legal-images";
 import { CORE_PRACTICE_AREAS } from "@/lib/core-practice-areas";
 import { PageHero } from "@/components/page-hero";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const HEADING_FONT = "var(--mantine-heading-font-family)";
 
 export default async function PracticeAreasPage() {
-  const practiceAreas = await getPracticeAreas();
+  const practiceAreas = PRACTICE_AREAS;
   const { oldBaileyCourt, lawBooks } = LEGAL_IMAGES;
   const pageTitles = new Map(practiceAreas.map((a) => [a.slug, a.shortTitle]));
 

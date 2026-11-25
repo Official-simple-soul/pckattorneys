@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Grid, GridCol, SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import { getPartners, getPracticeAreaBySlug, getPracticeAreas } from "@/lib/content";
-import { asExtraSections, asStringArray, asTitleBodyArray } from "@/lib/types";
+import { PRACTICE_AREAS } from "@/content/practice-areas";
+import { PARTNERS } from "@/content/partners";
 import { PracticeIcon } from "@/lib/practice-icons";
 import { ENERGY_SLUG } from "@/lib/energy-sectors";
 import { anchorId } from "@/lib/anchor";
@@ -14,13 +14,13 @@ import { LinkButton } from "@/components/ui/link-button";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
-  const areas = await getPracticeAreas();
+  const areas = PRACTICE_AREAS;
   return areas.map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const area = await getPracticeAreaBySlug(slug);
+  const area = PRACTICE_AREAS.find((a) => a.slug === slug);
   if (!area) return {};
   return { title: area.title, description: area.tagline };
 }
@@ -37,20 +37,21 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 export default async function PracticeAreaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [area, allAreas] = await Promise.all([getPracticeAreaBySlug(slug), getPracticeAreas()]);
+  const area = PRACTICE_AREAS.find((a) => a.slug === slug);
+  const allAreas = PRACTICE_AREAS;
   if (!area) notFound();
 
   if (area.slug === ENERGY_SLUG) {
-    const partners = await getPartners();
+    const partners = PARTNERS;
     const principal = partners.find((p) => /principal/i.test(p.title) && p.email);
     return <EnergyPage area={area} partnerEmail={principal?.email} />;
   }
 
   const [introLead, ...introRest] = area.intro.split("\n\n").filter(Boolean);
-  const services = asStringArray(area.services);
-  const matters = asStringArray(area.matters);
-  const whyItems = asTitleBodyArray(area.whyItems);
-  const extraSections = asExtraSections(area.extraSections);
+  const services = area.services;
+  const matters = area.matters;
+  const whyItems = area.whyItems;
+  const extraSections = area.extraSections;
   const otherAreas = allAreas.filter((a) => a.slug !== area.slug);
 
   return (
@@ -116,7 +117,7 @@ export default async function PracticeAreaDetailPage({ params }: { params: Promi
                 </Title>
                 <nav aria-label="Other practice areas" className="side-links">
                   {otherAreas.map((other) => (
-                    <Link key={other.id} href={`/practice-areas/${other.slug}`}>
+                    <Link key={other.slug} href={`/practice-areas/${other.slug}`}>
                       {other.shortTitle}
                     </Link>
                   ))}

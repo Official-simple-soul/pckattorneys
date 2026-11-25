@@ -1,7 +1,7 @@
 import { createTheme, type MantineThemeOverride } from "@mantine/core";
 import { generateColors } from "@mantine/colors-generator";
 import { headingFontCss, bodyFontCss } from "./fonts";
-import type { SiteSettings } from "@prisma/client";
+import type { SiteSettings } from "@/content/types";
 
 export function buildTheme(settings: SiteSettings): MantineThemeOverride {
   return createTheme({

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Grid, GridCol, SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import type { PracticeArea } from "@prisma/client";
+import type { PracticeArea } from "@/content/types";
 import { ENERGY_IMAGES } from "@/lib/legal-images";
 import {
   ENERGY_INTRO,

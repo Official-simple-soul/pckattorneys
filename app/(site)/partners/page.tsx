@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Anchor, Stack, Text, Title } from "@mantine/core";
-import { getPartners, getSiteSettings } from "@/lib/content";
-import { asStringArray } from "@/lib/types";
+import { SITE } from "@/content/site";
+import { PARTNERS } from "@/content/partners";
 import { LEGAL_IMAGES } from "@/lib/legal-images";
 import { PageHero } from "@/components/page-hero";
 import { PartnerSeal } from "@/components/partner-seal";
@@ -18,7 +18,8 @@ function telHref(phone: string) {
 }
 
 export default async function PartnersPage() {
-  const [partners, settings] = await Promise.all([getPartners(), getSiteSettings()]);
+  const partners = PARTNERS;
+  const settings = SITE;
 
   return (
     <>
@@ -31,7 +32,7 @@ export default async function PartnersPage() {
       <div className="section-container">
         {partners.map((partner) => {
           const [bioLead, ...bioRest] = partner.bio.split("\n\n").filter(Boolean);
-          const focus = asStringArray(partner.practiceFocus);
+          const focus = partner.practiceFocus;
           const fullName = partner.credentials ? `${partner.name}, ${partner.credentials}` : partner.name;
 
           return (
