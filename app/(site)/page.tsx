@@ -8,14 +8,11 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import {
-  getHeroSlides,
-  getHomePage,
-  getPracticeAreas,
-  getSiteSettings,
-} from '@/lib/content';
+import { SITE } from '@/content/site';
+import { HOME } from '@/content/home';
+import { PRACTICE_AREAS } from '@/content/practice-areas';
+import { HERO_SLIDES } from '@/content/hero-slides';
 import { HeroCarousel, type HeroSlideView } from '@/components/hero-carousel';
-import { asStringArray, asTitleBodyArray } from '@/lib/types';
 import { PracticeIndex } from '@/components/practice-index';
 import { LEGAL_IMAGES } from '@/lib/legal-images';
 import { ScalesArt } from '@/components/legal-art';
@@ -25,16 +22,14 @@ import { LinkButton } from '@/components/ui/link-button';
 const HEADING_FONT = 'var(--mantine-heading-font-family)';
 
 export default async function HomePage() {
-  const [home, settings, practiceAreas, extraSlides] = await Promise.all([
-    getHomePage(),
-    getSiteSettings(),
-    getPracticeAreas(),
-    getHeroSlides(),
-  ]);
+  const home = HOME;
+  const settings = SITE;
+  const practiceAreas = PRACTICE_AREAS;
+  const extraSlides = HERO_SLIDES;
 
-  const trustBarItems = asStringArray(home.trustBarItems);
-  const [valuePropLead, ...valuePropRest] = asStringArray(home.valuePropBody);
-  const whyChooseUsItems = asTitleBodyArray(home.whyChooseUsItems);
+  const trustBarItems = home.trustBarItems;
+  const [valuePropLead, ...valuePropRest] = home.valuePropBody;
+  const whyChooseUsItems = home.whyChooseUsItems;
   const { justiceStatue, lawBooks, magnaCarta, oldBaileyCourt } = LEGAL_IMAGES;
 
   const statue = {

@@ -3,14 +3,14 @@ import { Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { PracticeIcon } from "@/lib/practice-icons";
 
-type PracticeAreaSummary = { id: string; slug: string; shortTitle: string; tagline: string };
+type PracticeAreaSummary = { slug: string; shortTitle: string; tagline: string };
 
 /** Ruled list of practice areas, each row linking to its page. */
 export function PracticeIndex({ areas }: { areas: PracticeAreaSummary[] }) {
   return (
     <nav aria-label="Practice areas" className="practice-list">
       {areas.map((area) => (
-        <Link key={area.id} href={`/practice-areas/${area.slug}`} className="practice-row">
+        <Link key={area.slug} href={`/practice-areas/${area.slug}`} className="practice-row">
           <span className="practice-row-ring">
             <PracticeIcon slug={area.slug} size={20} stroke={1.5} aria-hidden />
           </span>

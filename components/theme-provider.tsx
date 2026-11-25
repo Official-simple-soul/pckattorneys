@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { MantineProvider } from "@mantine/core";
 import { buildTheme } from "@/lib/theme";
-import type { SiteSettings } from "@prisma/client";
+import type { SiteSettings } from "@/content/types";
 
 export function ThemeProvider({
   settings,

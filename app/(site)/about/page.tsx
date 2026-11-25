@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Grid, GridCol, SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import { getAboutPage } from "@/lib/content";
-import { asStringArray, asTitleBodyArray } from "@/lib/types";
+import { ABOUT } from "@/content/about";
 import { LEGAL_IMAGES } from "@/lib/legal-images";
 import { LEGAL_HISTORY } from "@/lib/legal-history";
 import { PageHero } from "@/components/page-hero";
@@ -39,14 +38,14 @@ function Paragraphs({ text, onNavy = false }: { text: string; onNavy?: boolean }
 }
 
 export default async function AboutPage() {
-  const about = await getAboutPage();
+  const about = ABOUT;
 
   const [introLead, ...introRest] = about.intro.split("\n\n").filter(Boolean);
-  const philosophyQuestions = asStringArray(about.philosophyQuestions);
-  const approachItems = asTitleBodyArray(about.approachItems);
-  const whoWeServeItems = asTitleBodyArray(about.whoWeServeItems);
-  const globalPoints = asStringArray(about.globalPoints);
-  const standardPoints = asStringArray(about.standardPoints);
+  const philosophyQuestions = about.philosophyQuestions;
+  const approachItems = about.approachItems;
+  const whoWeServeItems = about.whoWeServeItems;
+  const globalPoints = about.globalPoints;
+  const standardPoints = about.standardPoints;
   const { royalCourts, blackstone } = LEGAL_IMAGES;
 
   return (

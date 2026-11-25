@@ -1,7 +1,10 @@
 import { Anchor, Grid, GridCol, Group, Stack, Text, Title } from "@mantine/core";
 import { IconLock } from "@tabler/icons-react";
-import { getContactPage, getPartners, getPracticeAreas, getSiteSettings } from "@/lib/content";
-import { OFFICES } from "@/lib/offices";
+import { SITE } from "@/content/site";
+import { CONTACT } from "@/content/contact";
+import { PRACTICE_AREAS } from "@/content/practice-areas";
+import { PARTNERS } from "@/content/partners";
+import { OFFICES } from "@/content/offices";
 import { PageHero } from "@/components/page-hero";
 import { ScalesArt } from "@/components/legal-art";
 import { ContactForm } from "@/components/contact-form";
@@ -20,12 +23,10 @@ function telHref(phone: string) {
 }
 
 export default async function ContactPage() {
-  const [contact, settings, practiceAreas, partners] = await Promise.all([
-    getContactPage(),
-    getSiteSettings(),
-    getPracticeAreas(),
-    getPartners(),
-  ]);
+  const contact = CONTACT;
+  const settings = SITE;
+  const practiceAreas = PRACTICE_AREAS;
+  const partners = PARTNERS;
 
   const reachablePartners = partners.filter((p) => p.email || p.phone);
 

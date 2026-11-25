@@ -1,12 +1,11 @@
 import { ImageResponse } from "next/og";
-import { getSiteSettings } from "@/lib/content";
+import { SITE } from "@/content/site";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
-export const dynamic = "force-dynamic";
 
 export default async function AppleIcon() {
-  const settings = await getSiteSettings();
+  const settings = SITE;
 
   return new ImageResponse(
     (

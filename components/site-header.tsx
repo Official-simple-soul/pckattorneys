@@ -1,9 +1,11 @@
-import { getSiteSettings, getPracticeAreas } from "@/lib/content";
+import { SITE } from "@/content/site";
+import { PRACTICE_AREAS } from "@/content/practice-areas";
 import { ENERGY_SECTORS, ENERGY_SLUG } from "@/lib/energy-sectors";
 import { HeaderNav } from "./header-nav";
 
 export async function SiteHeader() {
-  const [settings, practiceAreas] = await Promise.all([getSiteSettings(), getPracticeAreas()]);
+  const settings = SITE;
+  const practiceAreas = PRACTICE_AREAS;
 
   return (
     <HeaderNav

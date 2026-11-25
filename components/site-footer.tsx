@@ -1,10 +1,12 @@
 import { Anchor, Box, Divider, Group, SimpleGrid, Stack, Text } from "@mantine/core";
-import { getSiteSettings, getPracticeAreas } from "@/lib/content";
-import { OFFICES } from "@/lib/offices";
+import { SITE } from "@/content/site";
+import { PRACTICE_AREAS } from "@/content/practice-areas";
+import { OFFICES } from "@/content/offices";
 import { LinkText } from "@/components/ui/link-text";
 
 export async function SiteFooter() {
-  const [settings, practiceAreas] = await Promise.all([getSiteSettings(), getPracticeAreas()]);
+  const settings = SITE;
+  const practiceAreas = PRACTICE_AREAS;
   const year = new Date().getFullYear();
 
   return (
